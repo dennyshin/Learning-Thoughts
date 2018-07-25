@@ -5,16 +5,14 @@ date: "2018-07-24"
 output: workflowr::wflow_html
 ---
 
-## Introduction
+## **Introduction**
 
 How to use workflowr. Specifically on how to create and maintain the website.
 
 
-## Setup and Installation
+## **Setup and Installation**
 
-1. Install Rstudio
-
-[link](www.rstudio.com)
+1. Install [Rstudio](www.rstudio.com)
 
 2. Install workflowr from CRAN:
 
@@ -52,11 +50,73 @@ wflow_start("project_name")
 wflow_build()
 ```
 
-5. Publish the site
+5. Publish site
+
+```{r eval=FALSE}
+wflow_publish("files", "comment")
+```
+
+6. Create a new repository on github
+
+7. Set the origin to the repository
+
+```{r eval=FALSE}
+wflow_git_remote("origin", "username", "project_name")
+```
+
+**Note: "origin" can be anything you want. "username" must be your exact github username. "project_name" should be the name of your newly created repository.**
+
+8. Push to git
+
+```{r eval=FALSE}
+wflow_git_push()
+```
+
+
+## **Making edits**
+
+To update your project follow these steps:
+
+1. Build the site
+
+```{r eval=FALSE}
+wflow_build()
+```
+
+This builds the site. You can stop here if you just want to preview your changes.
+
+2. Publish the site
 
 ```{r eval=FALSE}
 wflow_publish("files", "comments")
 ```
 
+This publishes your changes. It will not yet be seen on the github page.
 
-## Making edits
+To publish multiple files inside a folder quickly:
+
+```{r eval=FALSE}
+"analysis/*Rmd"
+```
+
+will include all files inside analysis with .Rmd extension
+
+3. Push to git
+
+First, make sure that you set your origin for this project first.
+
+```{r eval=FALSE}
+wflow_git_push()
+```
+
+This will push the published site to the github page. It usually takes a little time to go through.
+
+```{r eval=FALSE}
+wflow_git_push(dry_run=TRUE)
+```
+will show what changes will be made but not actually push to git.
+
+```{r eval=FALSE}
+wflow_git_push(republish=TRUE)
+```
+will republish all html pages.

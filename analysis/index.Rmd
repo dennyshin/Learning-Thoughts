@@ -8,6 +8,12 @@ output:
 
 A collection of all the things I've learned.
 
-[workflowR](workflowr.html)
+## Workflow
 
-[Rmarkdown](Rmarkdown.html)
+* [workflowR](workflowr.html)
+
+* [Rmarkdown](Rmarkdown.html)
+
+## Articles
+
+* [2018](articles-read-2018.html) (not yet created)

@@ -26,7 +26,7 @@ install.packages("rmarkdown")
 Most of the syntax is easy.  
 
 If you want to write plain text just type normally.
-Headings can be made by using \#. Less \#'s make bigger headings.
+Headings can be made by using \#. Less \#s make bigger headings.
 
 To show code that you have run, write the code in a code chunk.
 Press ctrl + alt + i to create a code chunk.
