@@ -11,9 +11,9 @@
 
 <meta name="author" content="Denny Shin" />
 
-<meta name="date" content="2018-07-24" />
+<meta name="date" content="2018-07-25" />
 
-<title>workflowr</title>
+<title>Rmarkdown</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -316,9 +316,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">workflowr</h1>
+<h1 class="title toc-ignore">Rmarkdown</h1>
 <h4 class="author"><em>Denny Shin</em></h4>
-<h4 class="date"><em>2018-07-24</em></h4>
+<h4 class="date"><em>2018-07-25</em></h4>
 
 </div>
 
@@ -395,57 +395,6 @@ Denny Shin
 added an rmarkdown page. expanded on workflowr page
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-9c90332
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-3024e72
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-94d5869
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-initial setup of website. also changed index and added workflowr page
-</td>
-</tr>
 </tbody>
 </table>
 </ul>
@@ -453,45 +402,20 @@ initial setup of website. also changed index and added workflowr page
 <hr />
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>How to use workflowr. Specifically on how to create and maintain the website.</p>
+<p>Some basics of Rmarkdown. This does not entail the syntax.</p>
 </div>
-<div id="setup-and-installation" class="section level2">
-<h2>Setup and Installation</h2>
-<ol style="list-style-type: decimal">
-<li>Install Rstudio</li>
-</ol>
-<p><a href="www.rstudio.com">link</a></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Install workflowr from CRAN:</li>
-</ol>
-<pre class="r"><code>install.packages(&quot;workflowr&quot;)</code></pre>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>Rstudio has Rmarkdown pre-installed.</p>
+<p>If not using Rstudio:</p>
+<pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
 </div>
-<div id="starting-a-new-project" class="section level2">
-<h2>Starting a new project</h2>
-<ol style="list-style-type: decimal">
-<li>Use the workflowr library</li>
-</ol>
-<pre class="r"><code>library(&quot;workflowr&quot;)</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Configure git (only need to do once per computer)</li>
-</ol>
-<pre class="r"><code>wflow_git_config(user.name = &quot;Your name&quot;, user.email = &quot;email@domain.com&quot;)</code></pre>
-<p><strong>Note: user.name does not need to match github username.</strong></p>
-<ol start="3" style="list-style-type: decimal">
-<li>Start a new project</li>
-</ol>
-<pre class="r"><code>wflow_start(&quot;project_name&quot;)</code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li>Build site</li>
-</ol>
-<pre class="r"><code>wflow_build()</code></pre>
-<ol start="5" style="list-style-type: decimal">
-<li>Publish the site</li>
-</ol>
-<pre class="r"><code>wflow_publish(&quot;files&quot;, &quot;comments&quot;)</code></pre>
-</div>
-<div id="making-edits" class="section level2">
-<h2>Making edits</h2>
+<div id="basics" class="section level2">
+<h2>Basics</h2>
+<p>Most of the syntax is easy.</p>
+<p>If you want to write plain text just type normally. Headings can be made by using #. Less #’s make bigger headings.</p>
+<p>To show code that you have run, write the code in a code chunk. Press ctrl + alt + i to create a code chunk. (insert an image later when u learn it)</p>
+<p>If eval=FALSE, code chunk will not be run. If echo=FALSE, source code will not be displayed</p>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
