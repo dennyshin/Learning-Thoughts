@@ -9,9 +9,11 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Denny Shin" />
 
+<meta name="date" content="2018-07-25" />
 
-<title>About</title>
+<title>eQTL discovery in adipose tissue</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -169,6 +174,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -216,7 +316,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">About</h1>
+<h1 class="title toc-ignore">eQTL discovery in adipose tissue</h1>
+<h4 class="author"><em>Denny Shin</em></h4>
+<h4 class="date"><em>2018-07-25</em></h4>
 
 </div>
 
@@ -265,104 +367,19 @@ Message
 <tbody>
 <tr>
 <td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/f81506d1610de5cc386daae277e7b1f15b1b6a32/docs/about.html" target="_blank">f81506d</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/071cb7de5de4cbcf2a7f2ba4a3dfb47963406ab0/docs/about.html" target="_blank">071cb7d</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/3bdde349bcfe3344ba6304afbac7a33e69e5449a/docs/about.html" target="_blank">3bdde34</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/9c9033225e2087e04458abbf9f38eb8d6bd5d437/docs/about.html" target="_blank">9c90332</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/3024e72388b4514903863286c756f21adc4d7d93/docs/about.html" target="_blank">3024e72</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Rmd
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/dennyshin/Learning-Thoughts/blob/a197cc664a45d41bbc6ada921da8e1e841b305a9/analysis/about.Rmd" target="_blank">a197cc6</a>
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/1947d8ad6325431f4ca4c957b2a1b30328e9e05c/analysis/eQTL-adipose-tissue.Rmd" target="_blank">1947d8a</a>
 </td>
 <td style="text-align:left;">
 Denny Shin
 </td>
 <td style="text-align:left;">
-2018-07-24
+2018-07-25
 </td>
 <td style="text-align:left;">
-Start workflowr project.
+created two new pages. finally made articles 2018 page. dont forget to change my site title if i even can.
 </td>
 </tr>
 </tbody>
@@ -370,7 +387,19 @@ Start workflowr project.
 </ul>
 <p></details></p>
 <hr />
-<p>Describe your project.</p>
+<div id="introduction" class="section level2">
+<h2><strong>Introduction</strong></h2>
+<p>A summary of an article about eQTL discovery in adipose tissue using CIBERSORT.</p>
+<p>Main motivation was to learn how they approached the eQTL analysis and their use of CIBERSORT.</p>
+</div>
+<div id="cell-type-proportion-estimates" class="section level2">
+<h2><strong>Cell-type proportion estimates</strong></h2>
+</div>
+<div id="links-and-information" class="section level2">
+<h2><strong>Links and Information</strong></h2>
+<p>Article Name: Cell-type heterogeneity in adipose tissue is associated with complex traits and reveals disease-relevant cell-specific eQTLs</p>
+<p>Main Author: Craig A. Glastonbury</p>
+</div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
@@ -393,6 +422,8 @@ footer is added to webpages before the MathJax javascript. -->
 <hr>
 
 
+</div>
+</div>
 
 </div>
 
