@@ -8,3 +8,4 @@ output:
 
 A collection of all the things I've learned.
 
+[workflowR](workflowr.html)
