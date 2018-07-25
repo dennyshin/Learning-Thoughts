@@ -1,0 +1,17 @@
+---
+title: "RNA-seq"
+author: "Denny Shin"
+date: "2018-07-25"
+output: workflowr::wflow_html
+---
+
+## **Introduction**
+
+What is RNA-seq and how does it work?
+
+This is a summary of RNA-seq based on this [video](https://www.youtube.com/watch?v=tlf6wYJrwKY) by StatQuest.
+
+
+## **What is RNA-seq?**
+
+In short, RNA-seq 

@@ -120,3 +120,12 @@ will show what changes will be made but not actually push to git.
 wflow_git_push(republish=TRUE)
 ```
 will republish all html pages.
+
+
+## **Creating a New Page**
+
+```{r eval=FALSE}
+wflow_open("file")
+```
+
+This normally opens a .Rmd file but if the file does not exist then it will be created for you. Make sure to give its directory and extension not just the file name.

@@ -8,12 +8,15 @@ output:
 
 A collection of all the things I've learned.
 
-## Workflow
+## **Workflow**
 
 * [workflowR](workflowr.html)
 
 * [Rmarkdown](Rmarkdown.html)
 
-## Articles
+## **Articles**
 
-* [2018](articles-read-2018.html) (not yet created)
+* [2018](articles-read-2018.html)
+
+## **Bioinformatics**
+* [RNA-seq](RNA-seq.html)

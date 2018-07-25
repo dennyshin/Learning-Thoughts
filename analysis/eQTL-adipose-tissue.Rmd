@@ -1,0 +1,23 @@
+---
+title: "eQTL discovery in adipose tissue"
+author: "Denny Shin"
+date: "2018-07-25"
+output: workflowr::wflow_html
+---
+
+## **Introduction**
+
+A summary of an article about eQTL discovery in adipose tissue using CIBERSORT.
+
+Main motivation was to learn how they approached the eQTL analysis and their use of CIBERSORT.
+
+
+## **Cell-type proportion estimates**
+
+
+
+## **Links and Information**
+
+Article Name: Cell-type heterogeneity in adipose tissue is associated with complex traits and reveals disease-relevant cell-specific eQTLs
+
+Main Author: Craig A. Glastonbury
