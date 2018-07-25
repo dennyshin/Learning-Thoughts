@@ -1,0 +1,38 @@
+---
+title: "Rmarkdown"
+author: "Denny Shin"
+date: "2018-07-25"
+output: workflowr::wflow_html
+---
+
+## Introduction
+
+Some basics of Rmarkdown. This does not entail the syntax.
+
+
+## Installation
+
+Rstudio has Rmarkdown pre-installed.
+
+If not using Rstudio:
+
+```{r eval=FALSE}
+install.packages("rmarkdown")
+```
+
+
+## Basics
+
+Most of the syntax is easy.  
+
+If you want to write plain text just type normally.
+Headings can be made by using \#. Less \#'s make bigger headings.
+
+To show code that you have run, write the code in a code chunk.
+Press ctrl + alt + i to create a code chunk.
+(insert an image later when u learn it)
+
+If eval=FALSE, code chunk will not be run.
+If echo=FALSE, source code will not be displayed
+
+

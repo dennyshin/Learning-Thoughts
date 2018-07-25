@@ -9,16 +9,54 @@ output: workflowr::wflow_html
 
 How to use workflowr. Specifically on how to create and maintain the website.
 
+
 ## Setup and Installation
 
 1. Install Rstudio
 
-[link]()
+[link](www.rstudio.com)
 
 2. Install workflowr from CRAN:
 
+
+```{r eval=FALSE}
 install.packages("workflowr")
+```
 
 ## Starting a new project
+
+1. Use the workflowr library
+
+```{r eval=FALSE}
+library("workflowr")
+
+```
+
+2. Configure git (only need to do once per computer)
+
+```{r eval=FALSE}
+wflow_git_config(user.name = "Your name", user.email = "email@domain.com")
+```
+
+**Note: user.name does not need to match github username.**
+
+3. Start a new project
+
+```{r eval=FALSE}
+wflow_start("project_name")
+```
+
+4. Build site
+
+```{r eval=FALSE}
+wflow_build()
+```
+
+5. Publish the site
+
+```{r eval=FALSE}
+wflow_publish("files", "comments")
+```
+
 
 ## Making edits
