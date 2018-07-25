@@ -5,12 +5,12 @@ date: "2018-07-25"
 output: workflowr::wflow_html
 ---
 
-## Introduction
+## **Introduction**
 
 Some basics of Rmarkdown. This does not entail the syntax.
 
 
-## Installation
+## **Installation**
 
 Rstudio has Rmarkdown pre-installed.
 
@@ -21,7 +21,7 @@ install.packages("rmarkdown")
 ```
 
 
-## Basics
+## **Basics**
 
 Most of the syntax is easy.  
 
