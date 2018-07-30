@@ -11,9 +11,9 @@
 
 <meta name="author" content="Denny Shin" />
 
-<meta name="date" content="2018-07-25" />
+<meta name="date" content="2018-07-30" />
 
-<title>RNA-seq</title>
+<title>CIBERSORT</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -316,9 +316,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">RNA-seq</h1>
+<h1 class="title toc-ignore">CIBERSORT</h1>
 <h4 class="author"><em>Denny Shin</em></h4>
-<h4 class="date"><em>2018-07-25</em></h4>
+<h4 class="date"><em>2018-07-30</em></h4>
 
 </div>
 
@@ -370,36 +370,19 @@ Message
 <tbody>
 <tr>
 <td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/b69d2301affdfa63e58ef584b4d845e2d94b2a7d/docs/RNA-seq.html" target="_blank">b69d230</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Rmd
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/dennyshin/Learning-Thoughts/blob/1947d8ad6325431f4ca4c957b2a1b30328e9e05c/analysis/RNA-seq.Rmd" target="_blank">1947d8a</a>
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/e3ab44c041b82ed64b69c16a0ac9a5844cb1c4c0/analysis/CIBERSORT.Rmd" target="_blank">e3ab44c</a>
 </td>
 <td style="text-align:left;">
 Denny Shin
 </td>
 <td style="text-align:left;">
-2018-07-25
+2018-07-30
 </td>
 <td style="text-align:left;">
-created two new pages. finally made articles 2018 page. dont forget to change my site title if i even can.
+added CIBERSORT page. Continued on the adipose tissue page.
 </td>
 </tr>
 </tbody>
@@ -409,12 +392,13 @@ created two new pages. finally made articles 2018 page. dont forget to change my
 <hr />
 <div id="introduction" class="section level2">
 <h2><strong>Introduction</strong></h2>
-<p>What is RNA-seq and how does it work?</p>
-<p>This is a summary of RNA-seq based on this <a href="https://www.youtube.com/watch?v=tlf6wYJrwKY">video</a> by StatQuest.</p>
+<p>A summary on the paper introducing CIBERSORT, a method developed to cell composition from gene expression data using computational techniques.</p>
 </div>
-<div id="what-is-rna-seq" class="section level2">
-<h2><strong>What is RNA-seq?</strong></h2>
-<p>In short, RNA-seq</p>
+<div id="how-it-works" class="section level2">
+<h2><strong>How it works</strong></h2>
+<p>CIBERSORT first needs to get a matrix of reference gene expression signatures. This matrix will be used to estimate the relative proportions of each cell type. CIBERSORT then uses a support vector regression (SVR) technique on our mixture (of cells) of interest to deconvulve the mixture.</p>
+<p>SVR is a machine learning approach that dynamically selects genes from the signature matrix when deconvulving the mixture.</p>
+<p>CIBERSORT also gives a global p-value. It is noted that calculating the p-value for all estimates is computationally expensive.</p>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
