@@ -7,12 +7,19 @@ output: workflowr::wflow_html
 
 ## **Introduction**
 
-A summary of an article about eQTL discovery in adipose tissue using CIBERSORT.
+A summary of an article about eQTL discovery using CIBERSORT.
 
-Main motivation was to learn how they approached the eQTL analysis and their use of CIBERSORT.
+My main motivation was to learn how they approached the eQTL analysis and their use of CIBERSORT.
 
 
-## **Cell-type proportion estimates**
+## **Testing CIBERSEORT**
+
+The first step was to estimate the cell type proportions using RNAseq datasets. But before jumping right into the estimation, CIBERSORT's accuracy and robustness were tested against well-defined data sets. The first test showed that CIBERSORT can, with a high degree of accuracy, identify cell types in purified cell type RNA-seq data. In the second test, 1000 simulated cell type mixtures were accurately identified by CIBERSORT. The third test involved the same simulations but with unknown cell types (they added two new cell types to the original four). CIBERSORT predicted accurately when the unknown cells were less than 10% of the total cell composition. (The article mentions that adipose tissue is likely to be less than 5% of unknown cell types.) Finally, the last test was to add Gaussian noise (at 10, 50 and 90%). CIBERSORT was accurate with up to 10% noise.
+
+
+## **Estimating cell type proportions**
+
+
 
 
 

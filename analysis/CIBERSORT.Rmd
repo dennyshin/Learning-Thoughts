@@ -1,0 +1,23 @@
+---
+title: "CIBERSORT"
+author: "Denny Shin"
+date: "2018-07-30"
+output: workflowr::wflow_html
+---
+
+## **Introduction**
+
+A summary on the paper introducing CIBERSORT, a method developed to cell composition from gene expression data using computational techniques.
+
+## **How it works**
+
+CIBERSORT first needs to get a matrix of reference gene expression signatures. This matrix will be used to estimate the relative proportions of each cell type. CIBERSORT then uses a support vector regression (SVR) technique on our mixture (of cells) of interest to deconvulve the mixture. 
+
+SVR is a machine learning approach that dynamically selects genes from the signature matrix when deconvulving the mixture.
+
+CIBERSORT also gives a global p-value. It is noted that calculating the p-value for all estimates is computationally expensive.
+
+
+
+
+
