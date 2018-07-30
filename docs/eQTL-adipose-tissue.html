@@ -332,7 +332,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/e3ab44c041b82ed64b69c16a0ac9a5844cb1c4c0" target="_blank">e3ab44c</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/594ef3d5f254adb25ae703050d59d2fda08014bc" target="_blank">594ef3d</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -368,6 +368,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/594ef3d5f254adb25ae703050d59d2fda08014bc/analysis/eQTL-adipose-tissue.Rmd" target="_blank">594ef3d</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-07-30
+</td>
+<td style="text-align:left;">
+more stuff in adipose tissue page
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/d4b6a3e60a6cd4619189371c677faf5667a1ef4e/docs/eQTL-adipose-tissue.html" target="_blank">d4b6a3e</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-07-30
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -431,10 +465,21 @@ created two new pages. finally made articles 2018 page. dont forget to change my
 </div>
 <div id="testing-ciberseort" class="section level2">
 <h2><strong>Testing CIBERSEORT</strong></h2>
-<p>The first step was to estimate the cell type proportions using RNAseq datasets. But before jumping right into the estimation, CIBERSORT’s accuracy and robustness were tested against well-defined data sets. The first test showed that CIBERSORT can, with a high degree of accuracy, identify cell types in purified cell type RNA-seq data. In the second test, 1000 simulated cell type mixtures were accurately identified by CIBERSORT. The third test involved the same simulations but with unknown cell types (they added two new cell types to the original four). CIBERSORT predicted accurately when the unknown cells were less than 10% of the total cell composition. (The article mentions that adipose tissue is likely to be less than 5% of unknown cell types.) Finally, the last test was to add Gaussian noise (at 10, 50 and 90%). CIBERSORT was accurate with up to 10% noise.</p>
+<p>The first step was to estimate the cell type proportions using RNAseq datasets. But before jumping right into the estimation, CIBERSORT’s accuracy and robustness were tested against well-defined data sets. The first test showed that CIBERSORT can, with a high degree of accuracy, identify cell types in purified cell type RNA-seq data. In the second test, 1000 simulated cell type mixtures were accurately identified by CIBERSORT. The third test involved the same simulations but with unknown cell types (they added two new cell types to the original four). CIBERSORT predicted accurately when the unknown cells were less than 10% of the total cell composition (the article mentions that adipose tissue is likely to be less than 5% of unknown cell types). Finally, the last test was to add Gaussian noise (at 10, 50 and 90%). CIBERSORT was accurate with up to 10% noise.</p>
 </div>
 <div id="estimating-cell-type-proportions" class="section level2">
 <h2><strong>Estimating cell type proportions</strong></h2>
+<p>CIBERSORT was applied to a dataset obtained from TwinsUK (these samples successfully deconvulved at an FDR 1%). These results also agreed with previous studies using flow cytometry (an older method of determining cell-type proportions). Another dataset, this time from GTEx, was applied to CIBERSORT and showed a much less successful deconvolution rate (75/326 failed). Comparing the two datasets (only those that successfully deconvulved) GTEx samples had:</p>
+<ul>
+<li>lower adipocyte fraction</li>
+<li>two times more vasculature</li>
+<li>4 times more macrophages</li>
+</ul>
+<p>They suspect that the lower expression of ADIPOQ in the GTEx are whats causing the degraded data. The article lists more potential causes but I don’t really follow the biology.</p>
+</div>
+<div id="adipose-cell-types-are-heritable" class="section level2">
+<h2><strong>Adipose cell-types are heritable</strong></h2>
+<p>The article mentions that they use classical twin models to determine hertibility. It seems that this method, in a sense, is making use of identical twins to find genetic traits. The article also mentions that certain physiological factors may mediate the adipose cell composition.</p>
 </div>
 <div id="links-and-information" class="section level2">
 <h2><strong>Links and Information</strong></h2>
