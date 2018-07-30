@@ -14,13 +14,23 @@ My main motivation was to learn how they approached the eQTL analysis and their 
 
 ## **Testing CIBERSEORT**
 
-The first step was to estimate the cell type proportions using RNAseq datasets. But before jumping right into the estimation, CIBERSORT's accuracy and robustness were tested against well-defined data sets. The first test showed that CIBERSORT can, with a high degree of accuracy, identify cell types in purified cell type RNA-seq data. In the second test, 1000 simulated cell type mixtures were accurately identified by CIBERSORT. The third test involved the same simulations but with unknown cell types (they added two new cell types to the original four). CIBERSORT predicted accurately when the unknown cells were less than 10% of the total cell composition. (The article mentions that adipose tissue is likely to be less than 5% of unknown cell types.) Finally, the last test was to add Gaussian noise (at 10, 50 and 90%). CIBERSORT was accurate with up to 10% noise.
+The first step was to estimate the cell type proportions using RNAseq datasets. But before jumping right into the estimation, CIBERSORT's accuracy and robustness were tested against well-defined data sets. The first test showed that CIBERSORT can, with a high degree of accuracy, identify cell types in purified cell type RNA-seq data. In the second test, 1000 simulated cell type mixtures were accurately identified by CIBERSORT. The third test involved the same simulations but with unknown cell types (they added two new cell types to the original four). CIBERSORT predicted accurately when the unknown cells were less than 10% of the total cell composition (the article mentions that adipose tissue is likely to be less than 5% of unknown cell types). Finally, the last test was to add Gaussian noise (at 10, 50 and 90%). CIBERSORT was accurate with up to 10% noise.
 
 
 ## **Estimating cell type proportions**
 
+CIBERSORT was applied to a dataset obtained from TwinsUK (these samples successfully deconvulved at an FDR 1%). These results also agreed with previous studies using flow cytometry (an older method of determining cell-type proportions). Another dataset, this time from GTEx, was applied to CIBERSORT and showed a much less successful deconvolution rate (75/326 failed). Comparing the two datasets (only those that successfully deconvulved) GTEx samples had:
+
+* lower adipocyte fraction
+* two times more vasculature
+* 4 times more macrophages
+
+They suspect that the lower expression of ADIPOQ in the GTEx are whats causing the degraded data. The article lists more potential causes but I don't really follow the biology.
 
 
+## **Adipose cell-types are heritable**
+
+The article mentions that they use classical twin models to determine hertibility. It seems that this method, in a sense, is making use of identical twins to find genetic traits. The article also mentions that certain physiological factors may mediate the adipose cell composition.
 
 
 ## **Links and Information**
