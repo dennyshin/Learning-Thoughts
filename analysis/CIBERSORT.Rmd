@@ -7,7 +7,7 @@ output: workflowr::wflow_html
 
 ## **Introduction**
 
-A summary on the paper introducing CIBERSORT, a method developed to cell composition from gene expression data using computational techniques.
+A summary on the paper introducing CIBERSORT, a method developed to determine cell composition from gene expression data using computational techniques.
 
 ## **How it works**
 
@@ -18,6 +18,41 @@ SVR is a machine learning approach that dynamically selects genes from the signa
 CIBERSORT also gives a global p-value. It is noted that calculating the p-value for all estimates is computationally expensive.
 
 
+## **Testing**
+
+#### on leukocyte signature matrix
+
+CIBERSORT was able to match 93% of previously verified datasets.
+
+#### on ideal mixtures
+
+CIBERSORT performs just as well as previously well defind methods on ideal mixtures.
+
+#### by simulation
+
+This seems most useful when trying to verify the performance of CIBERSORT when there are unknown content in the mixtures. Methods other than CIBERSORT (sample handling, stochastic gene expression variation, platform-to-platform differences???) all seemed to degrade in accuracy. Also, CIBERSORT claims to handle difficult mixtures (usually ones with rare cell types) with the least errors when compared to other methods.
+
+#### on closely related cell types
+
+By using CIBERSORT we no longer have to use cell-specific markers. CIBERSORT shows to perform most accurately.
+
+#### consistency on difficult mixtures
+
+They used a variety of different cell mixtures, in which CIBERSORT outperformed almost all other methods, but I'm not sure why specifically those mixtures were chosen.
+
+#### performance against flow cytometry
+
+The previous test showed that flow cytometry can also perform at a similar level to CIBERSORT. Additional reading on flow cytometry should be done. In short, flow cytometry is a technique that counts/sorts marked cells.
 
 
+## **Additional Thoughts**
+
+More detail can be found in the online version. Perhaps following some methods on and running CIBERSORT will give me a deeper insight.
+
+
+## **Links and Information**
+
+Article Name: Robust enumeration of cell subsets from tissue expression profiles
+
+Main Author: Aaron M Newman
 

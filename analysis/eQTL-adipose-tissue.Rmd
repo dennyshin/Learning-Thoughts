@@ -19,7 +19,7 @@ The first step was to estimate the cell type proportions using RNAseq datasets. 
 
 ## **Estimating cell type proportions**
 
-CIBERSORT was applied to a dataset obtained from TwinsUK (these samples successfully deconvulved at an FDR 1%). These results also agreed with previous studies using flow cytometry (an older method of determining cell-type proportions). Another dataset, this time from GTEx, was applied to CIBERSORT and showed a much less successful deconvolution rate (75/326 failed). Comparing the two datasets (only those that successfully deconvulved) GTEx samples had:
+CIBERSORT was applied to a dataset obtained from TwinsUK (these samples successfully deconvulved at an FDR 1%). These results also agreed with previous studies using flow cytometry (an older method of determining cell-type proportions). Another dataset, this time from GTEx, was applied to CIBERSORT and showed a much less successful deconvolution rate (~23% failed). Comparing the two datasets (only those that successfully deconvulved) GTEx samples had:
 
 * lower adipocyte fraction
 * two times more vasculature
@@ -33,8 +33,29 @@ They suspect that the lower expression of ADIPOQ in the GTEx are whats causing t
 The article mentions that they use classical twin models to determine hertibility. It seems that this method, in a sense, is making use of identical twins to find genetic traits. The article also mentions that certain physiological factors may mediate the adipose cell composition.
 
 
+## **Adjusting for Macrophage heterogeneity**
+
+It was found that macrophage proportion was significantly affecting the result, association with BMI and adipose composition. I sort of get what they're doing here but I'm not really following why.
+
+
+## **Gene expression variance and co-variance**
+
+There's some detail about how cell-type proportion influences gene expression in adipose tissue but it's hard to tell why without the PCA plot or from their explanation.
+
+
+## **cis-eQTL discovery**
+
+There is an increase in the discovery of cis-eQTL when cell-type proportions are included in the analysis. Article mentions the use of probabilistic estimation of expression residuals (PEER) factors to adjust the eQTL analysis. More on this should be read.
+
+
+## **Additional Thoughts**
+
+There seems to be a lot to learn about the "correct" approaches to a bioinformatic study from this article that I can learn. Some statistical jargon and methods are way above my head at this level but I should be able to fill them in. It was also difficult to follow the article at times when so much detail about the biology was written that I have little knowledge of. 
+
+
+
 ## **Links and Information**
 
 Article Name: Cell-type heterogeneity in adipose tissue is associated with complex traits and reveals disease-relevant cell-specific eQTLs
 
-Main Author: Craig A. Glastonbury
+Main Author: Craig A Glastonbury
