@@ -323,7 +323,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-07-30</p>
+<p><strong>Last updated:</strong> 2018-07-31</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -332,7 +332,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/e3ab44c041b82ed64b69c16a0ac9a5844cb1c4c0" target="_blank">e3ab44c</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/256cb8b2264113d4a9357d1e5a54ca44e942fad6" target="_blank">256cb8b</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -373,6 +373,40 @@ Message
 Rmd
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/256cb8b2264113d4a9357d1e5a54ca44e942fad6/analysis/CIBERSORT.Rmd" target="_blank">256cb8b</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-07-31
+</td>
+<td style="text-align:left;">
+i think i have finished a first draft on cibersort and adipose tissue pages
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/d4b6a3e60a6cd4619189371c677faf5667a1ef4e/docs/CIBERSORT.html" target="_blank">d4b6a3e</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-07-30
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
 <a href="https://github.com/dennyshin/Learning-Thoughts/blob/e3ab44c041b82ed64b69c16a0ac9a5844cb1c4c0/analysis/CIBERSORT.Rmd" target="_blank">e3ab44c</a>
 </td>
 <td style="text-align:left;">
@@ -392,13 +426,49 @@ added CIBERSORT page. Continued on the adipose tissue page.
 <hr />
 <div id="introduction" class="section level2">
 <h2><strong>Introduction</strong></h2>
-<p>A summary on the paper introducing CIBERSORT, a method developed to cell composition from gene expression data using computational techniques.</p>
+<p>A summary on the paper introducing CIBERSORT, a method developed to determine cell composition from gene expression data using computational techniques.</p>
 </div>
 <div id="how-it-works" class="section level2">
 <h2><strong>How it works</strong></h2>
 <p>CIBERSORT first needs to get a matrix of reference gene expression signatures. This matrix will be used to estimate the relative proportions of each cell type. CIBERSORT then uses a support vector regression (SVR) technique on our mixture (of cells) of interest to deconvulve the mixture.</p>
 <p>SVR is a machine learning approach that dynamically selects genes from the signature matrix when deconvulving the mixture.</p>
 <p>CIBERSORT also gives a global p-value. It is noted that calculating the p-value for all estimates is computationally expensive.</p>
+</div>
+<div id="testing" class="section level2">
+<h2><strong>Testing</strong></h2>
+<div id="on-leukocyte-signature-matrix" class="section level4">
+<h4>on leukocyte signature matrix</h4>
+<p>CIBERSORT was able to match 93% of previously verified datasets.</p>
+</div>
+<div id="on-ideal-mixtures" class="section level4">
+<h4>on ideal mixtures</h4>
+<p>CIBERSORT performs just as well as previously well defind methods on ideal mixtures.</p>
+</div>
+<div id="by-simulation" class="section level4">
+<h4>by simulation</h4>
+<p>This seems most useful when trying to verify the performance of CIBERSORT when there are unknown content in the mixtures. Methods other than CIBERSORT (sample handling, stochastic gene expression variation, platform-to-platform differences???) all seemed to degrade in accuracy. Also, CIBERSORT claims to handle difficult mixtures (usually ones with rare cell types) with the least errors when compared to other methods.</p>
+</div>
+<div id="on-closely-related-cell-types" class="section level4">
+<h4>on closely related cell types</h4>
+<p>By using CIBERSORT we no longer have to use cell-specific markers. CIBERSORT shows to perform most accurately.</p>
+</div>
+<div id="consistency-on-difficult-mixtures" class="section level4">
+<h4>consistency on difficult mixtures</h4>
+<p>They used a variety of different cell mixtures, in which CIBERSORT outperformed almost all other methods, but I’m not sure why specifically those mixtures were chosen.</p>
+</div>
+<div id="performance-against-flow-cytometry" class="section level4">
+<h4>performance against flow cytometry</h4>
+<p>The previous test showed that flow cytometry can also perform at a similar level to CIBERSORT. Additional reading on flow cytometry should be done. In short, flow cytometry is a technique that counts/sorts marked cells.</p>
+</div>
+</div>
+<div id="additional-thoughts" class="section level2">
+<h2><strong>Additional Thoughts</strong></h2>
+<p>More detail can be found in the online version. Perhaps following some methods on and running CIBERSORT will give me a deeper insight.</p>
+</div>
+<div id="links-and-information" class="section level2">
+<h2><strong>Links and Information</strong></h2>
+<p>Article Name: Robust enumeration of cell subsets from tissue expression profiles</p>
+<p>Main Author: Aaron M Newman</p>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
