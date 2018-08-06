@@ -1,0 +1,32 @@
+---
+title: "single-cell-RNAseq"
+author: "Denny Shin"
+date: "2018-08-06"
+output: workflowr::wflow_html
+---
+
+
+## **Motivation**
+
+Bulk-RNAseq data is suitable for many studies. But trying to determine distinct cell types, which have significant impact in phenotype, is difficult with just bulk-RNAseq. This is where single-cell RNA sequencing comes in. More specifically, this summary is focused on the computational and analytical challenges in HIGH THROUGHPUT single-cell RNA sequencing.
+
+
+## **Incorporating quantitaive standards**
+
+The article suggests using extrinsic molecules called "spike-ins". I think this is referring to the "gene signature matrix" that we obtain from our purified cell RNA sample. The article refers to "spike-in" as the control.
+
+## **Transcript quantification and quality control**
+
+It seems that unique molecular identifiers (UMIs) are used to assist in read alignment and depth calculation. Common tools FASTQC and IGB (Integrative Genomics Browser) are still used. 
+
+## **Obtaining biological insights**
+
+Our input for analysis is the matrix of gene expression counts. This matrix should be normalised and statistically solid.
+
+#### **Identification of cell type and cellular state**
+
+The article mentions the potential study of the differentiation of cells into a specific type.
+
+It says that PCA and hierarchical clustering methods can be applied to locate groups of different types of cells. It also mentions what I think is the gene signature matrix linear regression techinique? But it then talks about how this method can approximate a "spatial map" of the tissue which contain these cells. 
+
+
