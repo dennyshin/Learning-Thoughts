@@ -15,3 +15,5 @@ A collection of all articles I've read in 2018 and short summaries of them.
 [eQTL discovery in adipose tissue](eQTL-adipose-tissue.html)
 
 [CIBERSORT](CIBERSORT.html)
+
+[single-cell RNAseq](single-cell-RNAseq.html)
