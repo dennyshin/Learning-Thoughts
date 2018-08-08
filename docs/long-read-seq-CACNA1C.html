@@ -11,9 +11,9 @@
 
 <meta name="author" content="Denny Shin" />
 
-<meta name="date" content="2018-08-06" />
+<meta name="date" content="2018-08-08" />
 
-<title>single-cell-RNAseq</title>
+<title>long-read-seq-CACNA1C</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -316,9 +316,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">single-cell-RNAseq</h1>
+<h1 class="title toc-ignore">long-read-seq-CACNA1C</h1>
 <h4 class="author"><em>Denny Shin</em></h4>
-<h4 class="date"><em>2018-08-06</em></h4>
+<h4 class="date"><em>2018-08-08</em></h4>
 
 </div>
 
@@ -377,7 +377,7 @@ Message
 Rmd
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/dennyshin/Learning-Thoughts/blob/c353465c9f7014962393202d3f7e0064a3291016/analysis/single-cell-RNAseq.Rmd" target="_blank">c353465</a>
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/c353465c9f7014962393202d3f7e0064a3291016/analysis/long-read-seq-CACNA1C.Rmd" target="_blank">c353465</a>
 </td>
 <td style="text-align:left;">
 Denny Shin
@@ -389,57 +389,6 @@ Denny Shin
 added long read seq in cacna1c article.
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/a79ed496721368a57141fb0eef1b6a01cfe2fdd3/docs/single-cell-RNAseq.html" target="_blank">a79ed49</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-08-07
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/d9448ad9b165537a2c6c860d148e5f799fdce416/docs/single-cell-RNAseq.html" target="_blank">d9448ad</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-08-07
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/dennyshin/Learning-Thoughts/blob/8aa6c34a9f20cb86b43dd6e94b0769f232518e1b/analysis/single-cell-RNAseq.Rmd" target="_blank">8aa6c34</a>
-</td>
-<td style="text-align:left;">
-Denny Shin
-</td>
-<td style="text-align:left;">
-2018-08-07
-</td>
-<td style="text-align:left;">
-wflow_publish(“analysis/single-cell-RNAseq.Rmd”)
-</td>
-</tr>
 </tbody>
 </table>
 </ul>
@@ -447,29 +396,39 @@ wflow_publish(“analysis/single-cell-RNAseq.Rmd”)
 <hr />
 <div id="motivation" class="section level2">
 <h2><strong>Motivation</strong></h2>
-<p>Bulk-RNAseq data is suitable for many studies. But trying to determine distinct cell types, which have significant impact in phenotype, is difficult with just bulk-RNAseq. This is where single-cell RNA sequencing comes in. More specifically, this summary is focused on the computational and analytical challenges in HIGH THROUGHPUT single-cell RNA sequencing.</p>
+<p>We focus on the impact of RNA splicing on schizophrenia, more specifically, the CACNA1C gene. Why schizophrenia? Well, because schizophrenia is the disorder which most genetic loci have been identified to date (Feb 2018). Short-read RNAseq misses out on alot of the gene and splice isoforms. Also, because of read alignment it is hard to distinguish between full-length isoforms. Our motivation is to use long-red RNAseq to improve RNA splice isoform discovery.</p>
 </div>
-<div id="incorporating-quantitaive-standards" class="section level2">
-<h2><strong>Incorporating quantitaive standards</strong></h2>
-<p>The article suggests using extrinsic molecules called “spike-ins”. I think this is referring to the “gene signature matrix” that we obtain from our purified cell RNA sample. The article refers to “spike-in” as the control.</p>
+<div id="cacna1c-gene" class="section level2">
+<h2><strong>CACNA1C gene</strong></h2>
+<p>CACNA1C encodes a voltage-gated calcium channel (VGCC) and is a leading candidate gene forpsychiatric disorders. We currently (Feb 2018) observe ~50 exons and 40 isoforms (from splicing and transcriptional mechanisms). Alternative forms of the gene shows functionally different VGCCs.</p>
 </div>
-<div id="transcript-quantification-and-quality-control" class="section level2">
-<h2><strong>Transcript quantification and quality control</strong></h2>
-<p>It seems that unique molecular identifiers (UMIs) are used to assist in read alignment and depth calculation. Common tools FASTQC and IGB (Integrative Genomics Browser) are still used.</p>
+<div id="method" class="section level2">
+<h2><strong>Method</strong></h2>
+<p>Oxford nanopore will be used to provide the long-read sequences while bearing in mind that these reads have higher than normal error rates. To compensate, RT-PCR is combined with nanopore technolofy.</p>
+<p>There is a lot of terminology that I don’t understand but I think I get the general idea of what they’re doing. After RNA extraction (which I have no clue about) they do RT-PCR followed by nanopore sequencing. They map the reads and annotate transcripts. From this they find the expression levels. They also find new exons and exon junctions (the joining place of two exons on the mature mRNA). Lastly, they mention the effect of amplification of full-length genes but I don’t really follow. Note: RIN = RNA integrity number.</p>
 </div>
-<div id="obtaining-biological-insights" class="section level2">
-<h2><strong>Obtaining biological insights</strong></h2>
-<p>Our input for analysis is the matrix of gene expression counts. This matrix should be normalised and statistically solid.</p>
-<div id="identification-of-cell-type-and-cellular-state" class="section level4">
-<h4><strong>Identification of cell type and cellular state</strong></h4>
-<p>The article mentions the potential study of the differentiation of cells into a specific type.</p>
-<p>It says that PCA and hierarchical clustering methods can be applied to locate groups of different types of cells. It also mentions what I think is the gene signature matrix linear regression techinique? But it then talks about how this method can approximate a “spatial map” of the tissue which contain these cells.</p>
-<p>The last paragraph is talking about how we can correct for different gene expression levels that can occur in different cell cycles.</p>
+<div id="results" class="section level2">
+<h2><strong>Results</strong></h2>
+<div id="long-range-seq-reveal-new-things" class="section level4">
+<h4><strong>Long-range seq reveal new things</strong></h4>
+<p>Specifically, gene isoforms and exons. The new exons were validated using PCR and Sanger sequencing. Results also show high expression of a previously known transcript as expected. It validates the new exons and isoforms and also suggests that current annotations are missing many or represent repeats/errors.</p>
 </div>
-<div id="differential-expression-and-transcript-isoforms" class="section level4">
-<h4><strong>Differential expression and transcript isoforms</strong></h4>
-<p>Identifying the important gene that marks the gene to a particular cell type. We are looking for differentially expressed genes as candidates for possible genes that could heavily influence the type of cell.</p>
+<div id="impact-on-protein-sequence" class="section level4">
+<h4><strong>Impact on protein sequence</strong></h4>
+<p>Recall: CACNA1C encodes a VGCC. VGCC contains a pore, which are made of transmembrane repeats. It is known that disruptions to these membrane lead to a non-functioning protein. Thus, they looked for isoforms where the membrane coding regions are impacted. Long read sequencing has proved useful once again by being able to reliably identify microindels (given we have enough reads). The article also talks about the impact on the differen domains and channel properties of the protein.</p>
 </div>
+<div id="expression-across-different-brain-regions-tissues" class="section level4">
+<h4><strong>Expression across different brain regions (tissues)</strong></h4>
+<p>They found that individuals had no impact on gene expression but brain tissue did. Different tissues also showed different dominance of gene isoforms i.e. different tissues had different proportions of gene isoforms.</p>
+</div>
+<div id="problems-with-long-red-sequencing" class="section level4">
+<h4><strong>Problems with long-red sequencing</strong></h4>
+<p>High quality of RNA is needed for RT-PCR and long-read sequences. Post-mortem samples are often degraded. Article suggest a minimum RINe (?) value of 6 or 7 depending on intended use.</p>
+</div>
+</div>
+<div id="my-thoughts" class="section level2">
+<h2><strong>My thoughts</strong></h2>
+<p>So, always take my own thoughts with a full bag of salt because I know much less than any of these people. It is nice that we identified more transcripts but how do we compare the quality of these findings versus other methods? The article suggests very boldly that many other isoforms are repeats and errors but I am not really convinced. There is good reason to think this but I think that further testing and improvement of long-read sequences should be done before we reach this conclusion. Regardless, it is still exciting to think that long-reads are not far away from being used reliably for a variety of studies.</p>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
