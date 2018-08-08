@@ -29,4 +29,9 @@ The article mentions the potential study of the differentiation of cells into a 
 
 It says that PCA and hierarchical clustering methods can be applied to locate groups of different types of cells. It also mentions what I think is the gene signature matrix linear regression techinique? But it then talks about how this method can approximate a "spatial map" of the tissue which contain these cells. 
 
+The last paragraph is talking about how we can correct for different gene expression levels that can occur in different cell cycles.
 
+
+#### **Differential expression and transcript isoforms**
+
+Identifying the important gene that marks the gene to a particular cell type. We are looking for differentially expressed genes as candidates for possible genes that could heavily influence the type of cell. 
