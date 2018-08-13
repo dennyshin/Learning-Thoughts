@@ -1,0 +1,270 @@
+---
+title: "Seurat"
+author: "Denny Shin"
+date: "2018-08-13"
+output: workflowr::wflow_html
+---
+
+
+
+## **Introduction**
+
+I will be following through the code written [here](https://satijalab.org/seurat/pbmc3k_tutorial.html)
+
+It uses the packages Seurat and dplyr. The Seurat package takes a while.
+
+## **Setup the Seurat Object**
+
+```{r eval=FALSE}
+# Load the PBMC dataset
+pbmc.data <- Read10X(data.dir = "../data/pbmc3k_filtered_gene_bc_matrices/filtered_gene_bc_matrices/hg19/")
+
+# Examine the memory savings between regular and sparse matrices
+dense.size <- object.size(x = as.matrix(x = pbmc.data))
+dense.size
+
+sparse.size <- object.size(x = pbmc.data)
+sparse.size
+
+dense.size/sparse.size
+```
+
+It may take a little to load the dataset, there are 3. pbmc.data is a large matrix with ~90 million elements. I am assuming the second part is from the dplyr package?
+
+My data seems to be a little bigger than the example from the tutorial. This is also seen when I did the sparse.size and its ratio to dense.size.
+
+```{r eval=FALSE}
+# Initialize the Seurat object with the raw (non-normalized data).  Keep all genes expressed in >= 3 cells (~0.1% of the data). Keep all cells with at least 200 detected genes
+pbmc <- CreateSeuratObject(raw.data = pbmc.data, min.cells = 3, min.genes = 200, project = "10X_PBMC")
+```
+
+This made a large seurat (dunno what that is). The 10X_PBMC is confusing, is it just naming it?
+
+# **Standard pre-processing workflow**
+
+## **QC and selecting cells for further analysis**
+
+```{r eval=FALSE}
+mito.genes <- grep(pattern = "^MT-", x = rownames(x = pbmc@data), value = TRUE)
+percent.mito <- Matrix::colSums(pbmc@raw.data[mito.genes, ])/Matrix::colSums(pbmc@raw.data)
+
+pbmc <- AddMetaData(object = pbmc, metadata = percent.mito, col.name = "percent.mito")
+VlnPlot(object = pbmc, features.plot = c("nGene", "nUMI", "percent.mito"), nCol = 3)
+```
+
+There is a lot of detail as to how the functions work but I can't make head to tail of it either way.
+
+grep is just a function that utilises regex and makes making repeating similar names easier. I think percent.mito is finding some kind of proportion of mito?
+
+I can make all the plots no problem but I don't really have any idea about the first one.
+
+```{r eval=FALSE}
+par(mfrow = c(1, 2))
+GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "percent.mito")
+GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "nGene")
+```
+
+I guess the second plots are looking at the relationship between nUMI and percent.mito or nGene. There is a linear correlation between nUMI and nGene. Not really sure what to make of the percen.mito graph. Don't know what the number above the graphs mean.
+
+```{r eval=FALSE}
+pbmc <- FilterCells(object = pbmc, subset.names = c("nGene", "percent.mito"), low.thresholds = c(200, -Inf), high.thresholds = c(2500, 0.05))
+```
+
+I'm not sure about the reason why we are filtering some cells out.
+
+## **Normalizing the data**
+
+Its lognormalize with a scale factor of 10,000. I don't know what this does or why we did it.
+
+## **Detection of variable genese across the single cells**
+
+```{r eval=FALSE}
+pbmc <- FindVariableGenes(object = pbmc, mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
+```
+
+Ok, I have done something horribly wrong here because the plot does not come out the same. It does mention that the parameters should depend on the data and how you want to view it.
+
+```{r eval=FALSE}
+length(x = pbmc@var.genes)
+```
+
+Again my length is not the same.
+
+## **Scaling the data and removing unwanted sources of variation**
+
+We want to remove technical noise and also biological variation (e.g. cell cycle stage). 
+
+```{r eval=FALSE}
+pbmc <- ScaleData(object = pbmc, vars.to.regress = c("nUMI", "percent.mito"))
+```
+
+This may take a bit. There is a nice animation too. It also needs a firewall permission.
+
+## **Perform linear dimensional reduction**
+
+We are doing PCA here.
+
+```{r eval=FALSE}
+pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = TRUE, pcs.print = 1:5, genes.print = 5)
+```
+
+Seurat can visualise PCA by printing or plotting (VizPCA, PCAPlot).
+
+```{r eval=FALSE}
+PrintPCA(object = pbmc, pcs.print = 1:5, genes.print = 5, use.full = FALSE)
+VizPCA(object = pbmc, pcs.use = 1:2)
+PCAPlot(object = pbmc, dim.1 = 1, dim.2 = 2)
+```
+
+Yeah, I think I definetly have different data from the example in the tutorial. I don't know why though.
+
+```{r eval=FALSE}
+pbmc <- ProjectPCA(object = pbmc, do.print = FALSE)
+```
+
+I don't really understand what this is for.
+
+It can also do PCA heatmaps.
+
+```{r eval=FALSE}
+PCHeatmap(object = pbmc, pc.use = 1, cells.use = 500, do.balanced = TRUE, label.columns = FALSE)
+```
+
+When I ran it, I got a warning saying '"dimTitle" is not a graphical parameter'.
+
+```{r eval=FALSE}
+PCHeatmap(object = pbmc, pc.use = 1:12, cells.use = 500, do.balanced = TRUE, label.columns = FALSE, use.full = FALSE)
+```
+
+## **Determine statistically significant principal components**
+
+```{r eval=FALSE}
+pbmc <- JackStraw(object = pbmc, num.replicate = 100, display.progress = FALSE)
+JackStrawPlot(object = pbmc, PCs = 1:12)
+```
+
+```{r eval=FALSE}
+PCElbowPlot(object = pbmc)
+```
+
+## **Cluster the cells**
+
+```{r eval=FALSE}
+pbmc <- FindClusters(object = pbmc, reduction.type = "pca", dims.use = 1:10, resolution = 0.6, print.output = 0, save.SNN = TRUE)
+
+PrintFindClustersParams(object = pbmc)
+
+```
+
+Seurat's clustering method is as follows (I think): construct KNN (K-nearest neighbor) graph based on the euclidean distance in PCA, refine using Jaccard similarity and then Louvain algorithm (?).
+
+## **Non-linear dimensional reduction (tSNE)**
+
+```{r eval=FALSE}
+pbmc <- RunTSNE(object = pbmc, dims.use = 1:10, do.fast = TRUE)
+
+TSNEPlot(object = pbmc)
+```
+
+Looks pretty. More about t-SNE (t-distributed stochastic neighbor embedding) [here](https://distill.pub/2016/misread-tsne/).
+
+You can save this by using saveRDS()
+
+```{r eval=FALSE}
+saveRDS(pbmc, file = "../output/pbmc_tutorial.rds")
+```
+
+
+## **Finding differentially expressed genes (cluster biomarkers)**
+
+Seurat can find clusters using differential expression, FindAllMarkers(). min.pct is the minimum percentage the gene requires to be detected. Setting this to zero will make the function test a large number of genes that are unlikely to be differential (lot of compute time needed). max.cells.per.ident also speeds things up but I don't quite get why. 
+
+```{r eval=FALSE}
+cluster1.markers <- FindMarkers(object = pbmc, ident.1 = 1, min.pct = 0.25)
+print(x = head(x = cluster1.markers, n = 5))
+
+cluster5.markers <- FindMarkers(object = pbmc, ident.1 = 5, ident.2 = c(0, 3), min.pct = 0.25)
+print(x = head(x = cluster5.markers, n = 5))
+
+pbmc.markers <- FindAllMarkers(object = pbmc, only.pos = TRUE, min.pct = 0.25, thresh.use = 0.25)
+pbmc.markers %>% group_by(cluster) %>% top_n(2, avg_logFC)
+
+VlnPlot(object = pbmc, features.plot = c("MS4A1", "CD79A"))
+
+# raw UMI counts included
+VlnPlot(object = pbmc, features.plot = c("NKG7", "PF4"), use.raw = TRUE, y.log = TRUE)
+
+FeaturePlot(object = pbmc, features.plot = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP", "CD8A"), cols.use = c("grey", "blue"), reduction.use = "tsne")
+```
+
+Ok, that took really long. The FindAllMarkers for the pbmc.markers took ~5mins.
+
+I don't understand the Vln plots.
+
+The tutorial mentions alternate test methods can be used here (e.g. ROC test) and it can be changed using test.use.
+
+A heatmap can also be done.
+
+```{r eval=FALSE}
+top10 <- pbmc.markers %>% group_by(cluster) %>% top_n(10, avg_logFC)
+
+DoHeatmap(object = pbmc, genes.use = top10$gene, slim.col.label = TRUE, remove.key = TRUE)
+```
+
+## **Assigning cell type identity to clusters**
+
+Ok, I can see that he has given an ID to each cell type in the tutorial. But I think I have different data to him. So, I'm not sure I'm able to make anything useful here. I can still try with some of the parameters left out:
+
+```{r eval=FALSE}
+pbmc@ident <- plyr::mapvalues(x = pbmc@ident)
+TSNEPlot(object = pbmc, do.label = TRUE, pt.size = 0.5)
+```
+
+Yeah this comes up with an error saying the argument "from" is missing. So I definetly need to made the cluster ID number to the cluster name. 
+
+If I try it with the same IDs and cell types in the tutorial:
+
+```{r eval=FALSE}
+current.cluster.ids <- c(0, 1, 2, 3, 4, 5, 6, 7)
+new.cluster.ids <- c("CD4 T cells", "CD14+ Monocytes", "B cells", "CD8 T cells", "FCGR3A+ Monocytes", "NK cells", "Dendritic cells", "Megakaryocytes")
+pbmc@ident <- plyr::mapvalues(x = pbmc@ident, from = current.cluster.ids, to = new.cluster.ids)
+TSNEPlot(object = pbmc, do.label = TRUE, pt.size = 0.5)
+```
+
+Some of the cell types seem to be missing. I still think it's because I have different data from the tutorial but I may have made some small mistake along the way I'm not sure.
+
+## **Further subdivisions within cell types**
+
+```{r eval=FALSE}
+pbmc <- StashIdent(object = pbmc, save.name = "ClusterNames_0.6")
+
+pbmc <- FindClusters(object = pbmc, reduction.type = "pca", dims.use = 1:10, resolution = 0.8, print.output = FALSE)
+```
+
+The output told me to set force.recalc to TRUE. But I think the tutorial ignores the warning and moves on.
+
+```{r eval=FALSE}
+pbmc <- FindClusters(object = pbmc, reduction.type = "pca", dims.use = 1:10, resolution = 0.8, print.output = FALSE, force.recalc = TRUE)
+```
+
+```{r eval=FALSE}
+plot1 <- TSNEPlot(object = pbmc, do.return = TRUE, no.legend = TRUE, do.label = TRUE)
+plot2 <- TSNEPlot(object = pbmc, do.return = TRUE, group.by = "ClusterNames_0.6", 
+    no.legend = TRUE, do.label = TRUE)
+plot_grid(plot1, plot2)
+```
+
+```{r eval=FALSE}
+tcell.markers <- FindMarkers(object = pbmc, ident.1 = 0, ident.2 = 1)
+
+FeaturePlot(object = pbmc, features.plot = c("S100A4", "CCR7"), cols.use = c("green", "blue"))
+```
+
+We can save our work for now by:
+
+```{r eval=FALSE}
+pbmc <- SetAllIdent(object = pbmc, id = "ClusterNames_0.6")
+saveRDS(pbmc, file = "../output/pbmc3k_final.rds")
+```
+
+I understand the saveRDS but I don't know why we have to do the SetAllIdent

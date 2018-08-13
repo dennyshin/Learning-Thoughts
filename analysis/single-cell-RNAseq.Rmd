@@ -34,4 +34,17 @@ The last paragraph is talking about how we can correct for different gene expres
 
 #### **Differential expression and transcript isoforms**
 
-Identifying the important gene that marks the gene to a particular cell type. We are looking for differentially expressed genes as candidates for possible genes that could heavily influence the type of cell. 
+Identifying the important gene that marks the gene to a particular cell type. We are looking for differentially expressed genes as candidates for possible genes that could heavily influence the type of cell. We must be wary that there can be a lot of biological variance in the data due to varying cell stages. The article mentions the use of regression analysis to correct for this variance. Figure 3 is showing the analysis of the impact of cell stages on expression levels which is being used to fit the confounding factors so that we can correct them. We can also model for any technical variations that may occur. 
+
+#### **Regulatory networks and their robustness**
+
+This is studying the relationship between one gene and its impact on another gene expression (gene-gene covariance). We can start by assuming that pairs of genes that have correlated expression are likely to be co-regulated. We can also use networking models. With single cell RNAseq data we can see new things such as cell level transcription factors which would have otherwise been blurred in bluk RNAseq analysis. This can also help to find mutually exclusive mechanisms.
+
+#### **Stochasticity of transcription**
+
+Similar to regulatory network analysis of single cell RNAseq, we can find individual cell level information about the diversity in transcription. We would like to track mRNA creation over time but this is difficult since cells are lysed (breaking down of cell membrane) before library preparation. We can however assume that expression level from a cell is a random variable sample from a stationary distribution. Then we estimate kinetic parameters (related to mRNA prodcution over time). One big assumption we are taking here is that the parameters are independent of time because we assume taking samples from a stationary distribution. Often these kinetic paramters are not constant.
+
+#### **Using allele-specific expression to dtudy the regulation of gene expression**
+
+Is this similar to QTL analysis? I don't really understand. A challenge is allelic dropout (during PCR a primer may fail to bind, which means that that allele is not expressed) during library preparation.
+

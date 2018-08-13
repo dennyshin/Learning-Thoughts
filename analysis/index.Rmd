@@ -19,4 +19,7 @@ A collection of all the things I've learned.
 * [2018](articles-read-2018.html)
 
 ## **Bioinformatics**
+
 * [RNA-seq](RNA-seq.html)
+
+* [Seurat](Seurat.html)
