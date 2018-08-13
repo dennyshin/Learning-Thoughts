@@ -323,7 +323,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-08-08</p>
+<p><strong>Last updated:</strong> 2018-08-14</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -332,7 +332,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/c353465c9f7014962393202d3f7e0064a3291016" target="_blank">c353465</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/0378f6512d52f10716172d3fa3b85d565865d2b8" target="_blank">0378f65</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -341,9 +341,13 @@ Ignored files:
 Untracked files:
     Untracked:   (DESKTOP-9MQETIV's conflicted copy 2018-07-26).Rhistory
     Untracked:  Learning-Thoughts.Rproj
+    Untracked:  data/pbmc3k_filtered_gene_bc_matrices/
+    Untracked:  output/pbmc3k_final.rds
+    Untracked:  output/pbmc_tutorial.rds
 
 Unstaged changes:
     Deleted:    Learning. Thoughts.Rproj
+    Modified:   analysis/long-read-seq-CACNA1C.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -372,6 +376,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/0378f6512d52f10716172d3fa3b85d565865d2b8/analysis/single-cell-RNAseq.Rmd" target="_blank">0378f65</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-08-14
+</td>
+<td style="text-align:left;">
+added seurat page, expanded on single cell rnaseq
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/b8b589111103b2e605b196d66e02b38e3599763b/docs/single-cell-RNAseq.html" target="_blank">b8b5891</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-08-08
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -468,7 +506,19 @@ wflow_publish(“analysis/single-cell-RNAseq.Rmd”)
 </div>
 <div id="differential-expression-and-transcript-isoforms" class="section level4">
 <h4><strong>Differential expression and transcript isoforms</strong></h4>
-<p>Identifying the important gene that marks the gene to a particular cell type. We are looking for differentially expressed genes as candidates for possible genes that could heavily influence the type of cell.</p>
+<p>Identifying the important gene that marks the gene to a particular cell type. We are looking for differentially expressed genes as candidates for possible genes that could heavily influence the type of cell. We must be wary that there can be a lot of biological variance in the data due to varying cell stages. The article mentions the use of regression analysis to correct for this variance. Figure 3 is showing the analysis of the impact of cell stages on expression levels which is being used to fit the confounding factors so that we can correct them. We can also model for any technical variations that may occur.</p>
+</div>
+<div id="regulatory-networks-and-their-robustness" class="section level4">
+<h4><strong>Regulatory networks and their robustness</strong></h4>
+<p>This is studying the relationship between one gene and its impact on another gene expression (gene-gene covariance). We can start by assuming that pairs of genes that have correlated expression are likely to be co-regulated. We can also use networking models. With single cell RNAseq data we can see new things such as cell level transcription factors which would have otherwise been blurred in bluk RNAseq analysis. This can also help to find mutually exclusive mechanisms.</p>
+</div>
+<div id="stochasticity-of-transcription" class="section level4">
+<h4><strong>Stochasticity of transcription</strong></h4>
+<p>Similar to regulatory network analysis of single cell RNAseq, we can find individual cell level information about the diversity in transcription. We would like to track mRNA creation over time but this is difficult since cells are lysed (breaking down of cell membrane) before library preparation. We can however assume that expression level from a cell is a random variable sample from a stationary distribution. Then we estimate kinetic parameters (related to mRNA prodcution over time). One big assumption we are taking here is that the parameters are independent of time because we assume taking samples from a stationary distribution. Often these kinetic paramters are not constant.</p>
+</div>
+<div id="using-allele-specific-expression-to-dtudy-the-regulation-of-gene-expression" class="section level4">
+<h4><strong>Using allele-specific expression to dtudy the regulation of gene expression</strong></h4>
+<p>Is this similar to QTL analysis? I don’t really understand. A challenge is allelic dropout (during PCR a primer may fail to bind, which means that that allele is not expressed) during library preparation.</p>
 </div>
 </div>
 
