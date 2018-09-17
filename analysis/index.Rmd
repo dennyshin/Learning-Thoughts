@@ -23,3 +23,5 @@ A collection of all the things I've learned.
 * [RNA-seq](RNA-seq.html)
 
 * [Seurat](Seurat.html)
+
+* [scRNA Aims and Narrative](AimsandNarrative.html)
