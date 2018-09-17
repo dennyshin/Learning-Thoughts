@@ -1,0 +1,126 @@
+---
+title: "AimsAndNarrative"
+author: "Denny Shin"
+date: "2018-09-17"
+output: workflowr::wflow_html
+---
+
+# Project Narrative
+
+immuno-modulatory: capable of modifying or regulating immune functions
+
+glucocorticoids: a class of corticosteroids (steroid hormone). Its main immune effect is to reduce inflammation. Which is helpful to fight inflammatory conditions such as asthma. 
+
+The project aims to investigate glucocorticoid resistance.
+
+# Abstract
+
+Aim 1: single cell analysis of gene expression as a response to glucocorticoids.
+
+Aim 2: link the single cell analysis to phenotype, patient environment (stress, socioeconomic status, etc) and bulk leukocyte (white blood cell) RNAseq.
+
+# Introduction
+
+Preliminary bulk RNAseq analysis suggests that cell type composition is important in the variation in asthma symptoms.
+
+## Aim 1
+
+Peripheral blood mononuclear cell (PBMC) consist of many cell types such as various lymphocytes, monocytes, and dendritic cells.  The immune challenges in this experiment are stimulation by lipopolysaccharides (LPS) and phytohemagglutinin (PHA). LPS promotes secretion pro-inflammatory molecules. In total we choose 5 groups: unstimulated, LPS, PHA, LPS+GC, PHA+GC.
+
+> PHA function is confusing but I assume it does something similar to LPS?
+
+demultiplexing: process of extracting individual information from what was once mixed together.
+
+The main steps are to: genotype based demultiplexing, cluster major cell types then identify cell type specific gene expression responses to the 5 different cell treatments.
+
+## Aim 2
+
+Use the single cell RNAseq results to guide the reconstruction of single cell profiles of patients with only bulk RNAseq data. Simply put, we want to build a decomposition method from the single cell profiles created in Aim 1. Then we would like to reconstruct scRNAseq profiles from only bulk RNAseq data.
+
+# Significance and relevance to human health
+
+Some population of asthmatics do no respond to glucocorticoid therapy. 
+
+# Scientific Premise
+
+People with allergic asthma have an imbalance of T helper (Th1) and Th2 cell immune reactions, specifically an over reaction of Th2. Th2 plays a main role in an inflammatory immune response while Th1 suppress Th2.
+
+Previous studies are limited because they require invasive biopsies resulting in limited samples sizes and reproducibility.
+
+Glucocorticoids and its receptor (GR) act as a transcription factor.
+
+Stress exacerbates inflammation despite the fact stress causes high levels of cortisol (which are anti-inflammatory). Evidence shows that cortisol production down regulates glucocorticoid receptor expression. 
+
+# Preliminary Results
+
+Psychosocial environment is associated with glucocorticoid resistance.
+
+Cell composition is strongly linked with differential expression. 
+
+# Approach
+
+## Power analyses
+
+> Poisson Limit Theorem: sequence np converges to $\lambda$ ?
+
+Overall this section is confusing.
+
+## Aim 1
+
+#### Sample pre-processing, single cell determination and individual of origin identification
+
+read alignments done by "cellranger"
+
+find cell origin using "demuxlet"
+
+#### Cell type identification
+
+1. variable gene identification
+2. PCA dimensionality reduction
+3. clustering (k-means or graph theoretic approach)
+4. t-SNE, force graph or UMAP
+
+"Seurat" shows that there are 4 major cell populations: T-cells, NK-cells, B-cells, monocytes. The first three are known as lymphocytes.
+
+> For subsequent analyses, we will use a categorical variable for each cell defining which major celltype is assigned. Additionally, we will use a continuous variable to represent additional states within a cell-type (e.g. proliferating, being activated) or a pseudo-time trajectory between states.
+
+#### To characterize cell type specific responses to immune activation
+
+Aggregate the reads per individual to a simpler matrix that has 4 specific cell types for each 48 individuals.
+
+Identify genes with cell type specific transcriptional response. DESeq2 will be used. 
+
+Benjamini-Hochberg decreases False Discovery Rates (FDR or in this case BH-FDR)
+
+> Additionally, we will consider a linear mixed-effects model, to accommodate different sources of heterogeneity within the cell types.
+
+#### Expected Outcome
+
+Characterization of gene expression profiles for different cell types. Their transcriptional response to LPS and PHA. Observe glucocorticoid's immono-modulatory response. Observer gene expression in cytokine-mediated cell-cell communication. 
+
+## Aim 2
+
+Data from Aim 1 will guide the decomposition of bulk RNAseq data.
+
+#### Developing computational tools for the analysis of complex large scale heterogeneous datasets using single cell reference panels
+
+Many different approaches are proposed:
+
+* Factor analysis to decompose bulk data and define specific cell type components. Linear combination of weights. Weights should represent the proportion of cell types given a state.
+* BSEQ-sc. Single cell reference panel to deconvolve cell type differential expression of bulk data
+* Semi-supervised network to predict cell type. Predict future vector state of each cell type in response to immune stimulation. "Theano" and "Keras" packages.
+
+#### Association between cell-type expression responses, asthma phenotypes and environmental factors
+
+1. identify most relevant cell types
+2. characterize cell type specific signature of glucocorticoid resistance
+3. find if glucocorticoid resistance is mainly due to cell type or a broader range of immune cells
+4. which cell specific response is most strongly linked with asthma severity
+
+#### Expected outcome
+
+Link together clinical, behavioural, bulk and single cell data. Method will be applicable to other single cell or bulk datasets. 
+
+## Caveats and potential pitfalls
+
+Potential for insufficient statistical power. Have access to additional datasets.
