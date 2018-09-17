@@ -323,7 +323,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-08-14</p>
+<p><strong>Last updated:</strong> 2018-09-18</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -347,7 +347,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/0378f6512d52f10716172d3fa3b85d565865d2b8" target="_blank">0378f65</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/b42a4321e90b6e1e69d91691a011ebc854e7228b" target="_blank">b42a432</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -356,13 +356,14 @@ Ignored files:
 Untracked files:
     Untracked:   (DESKTOP-9MQETIV's conflicted copy 2018-07-26).Rhistory
     Untracked:  Learning-Thoughts.Rproj
-    Untracked:  data/pbmc3k_filtered_gene_bc_matrices/
+    Untracked:  data/filtered_gene_bc_matrices/
     Untracked:  output/pbmc3k_final.rds
     Untracked:  output/pbmc_tutorial.rds
 
 Unstaged changes:
     Deleted:    Learning. Thoughts.Rproj
     Modified:   analysis/long-read-seq-CACNA1C.Rmd
+    Modified:   analysis/single-cell-RNAseq.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -396,6 +397,40 @@ Message
 Rmd
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/b42a4321e90b6e1e69d91691a011ebc854e7228b/analysis/Seurat.Rmd" target="_blank">b42a432</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-09-18
+</td>
+<td style="text-align:left;">
+wflow_publish(“analysis/Seurat.Rmd”)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/f97dbbb50fa808e441dc0f0440a86dc5664e18ec/docs/Seurat.html" target="_blank">f97dbbb</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-08-14
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
 <a href="https://github.com/dennyshin/Learning-Thoughts/blob/0378f6512d52f10716172d3fa3b85d565865d2b8/analysis/Seurat.Rmd" target="_blank">0378f65</a>
 </td>
 <td style="text-align:left;">
@@ -416,12 +451,17 @@ added seurat page, expanded on single cell rnaseq
 <div id="introduction" class="section level2">
 <h2><strong>Introduction</strong></h2>
 <p>I will be following through the code written <a href="https://satijalab.org/seurat/pbmc3k_tutorial.html">here</a></p>
+<p>The goal of this tutorial is to demonstrate clustering of RNAseq data. Clustering is the process of grouping similar objects together.</p>
 <p>It uses the packages Seurat and dplyr. The Seurat package takes a while.</p>
 </div>
 <div id="setup-the-seurat-object" class="section level2">
 <h2><strong>Setup the Seurat Object</strong></h2>
-<pre class="r"><code># Load the PBMC dataset
-pbmc.data &lt;- Read10X(data.dir = &quot;../data/pbmc3k_filtered_gene_bc_matrices/filtered_gene_bc_matrices/hg19/&quot;)
+<p>Sparse matrices are matrices that contain mostly zeros.</p>
+<pre class="r"><code>library(Seurat)
+library(dplyr)
+
+# Load the PBMC dataset
+pbmc.data &lt;- Read10X(data.dir = &quot;../data/filtered_gene_bc_matrices/hg19/&quot;)
 
 # Examine the memory savings between regular and sparse matrices
 dense.size &lt;- object.size(x = as.matrix(x = pbmc.data))
@@ -431,47 +471,54 @@ sparse.size &lt;- object.size(x = pbmc.data)
 sparse.size
 
 dense.size/sparse.size</code></pre>
-<p>It may take a little to load the dataset, there are 3. pbmc.data is a large matrix with ~90 million elements. I am assuming the second part is from the dplyr package?</p>
-<p>My data seems to be a little bigger than the example from the tutorial. This is also seen when I did the sparse.size and its ratio to dense.size.</p>
-<pre class="r"><code># Initialize the Seurat object with the raw (non-normalized data).  Keep all genes expressed in &gt;= 3 cells (~0.1% of the data). Keep all cells with at least 200 detected genes
+<p>This first bit is to demonstrate the memory saving capability of Seurat.</p>
+<pre class="r"><code># Initialize the Seurat object with the raw (non-normalized data). Keep all genes expressed in &gt;= 3 cells (~0.1% of the data). Keep all cells with at least 200 detected genes
 pbmc &lt;- CreateSeuratObject(raw.data = pbmc.data, min.cells = 3, min.genes = 200, project = &quot;10X_PBMC&quot;)</code></pre>
-<p>This made a large seurat (dunno what that is). The 10X_PBMC is confusing, is it just naming it?</p>
+<p>In <a href="mailto:pbmc@meta.data">pbmc@meta.data</a> it contains the nGene and nUMI data for each cell.</p>
 </div>
-<div id="standard-pre-processing-workflow" class="section level1">
-<h1><strong>Standard pre-processing workflow</strong></h1>
 <div id="qc-and-selecting-cells-for-further-analysis" class="section level2">
 <h2><strong>QC and selecting cells for further analysis</strong></h2>
+<p>CreateSeuratObject can do a basic cutoff for minimum genes but for more sophisticated filtering (based on technical or biological parameters) we can do the following. Seurat is flexible in allowing user-specific filtering methods. An example:</p>
+<p>In this process we try to exclude “multiplets”, a phenomenom where multiple cells are in a single droplet. If there is one cell per one droplet, the number of genes observed should reflect the number of UMIs. We also filter cells based on the percentage of mitochondrial genes. High proportions of mitochondrial genome are indicative of poor-quality cells. I should find some published material for this.</p>
 <pre class="r"><code>mito.genes &lt;- grep(pattern = &quot;^MT-&quot;, x = rownames(x = pbmc@data), value = TRUE)
 percent.mito &lt;- Matrix::colSums(pbmc@raw.data[mito.genes, ])/Matrix::colSums(pbmc@raw.data)
 
 pbmc &lt;- AddMetaData(object = pbmc, metadata = percent.mito, col.name = &quot;percent.mito&quot;)
 VlnPlot(object = pbmc, features.plot = c(&quot;nGene&quot;, &quot;nUMI&quot;, &quot;percent.mito&quot;), nCol = 3)</code></pre>
-<p>There is a lot of detail as to how the functions work but I can’t make head to tail of it either way.</p>
-<p>grep is just a function that utilises regex and makes making repeating similar names easier. I think percent.mito is finding some kind of proportion of mito?</p>
-<p>I can make all the plots no problem but I don’t really have any idea about the first one.</p>
+<p>VlnPlot is built in to Seurat.</p>
+<p>Take a closer look into what we just did:</p>
+<pre class="r"><code>dim(pbmc@raw.data)
+pbmc@raw.data[mito.genes, ]</code></pre>
+<p>Ok, so we have 13714 genes (row) and 2700 cells (col). The names of the cells confuse me, are they from the cDNA barcode?</p>
 <pre class="r"><code>par(mfrow = c(1, 2))
 GenePlot(object = pbmc, gene1 = &quot;nUMI&quot;, gene2 = &quot;percent.mito&quot;)
 GenePlot(object = pbmc, gene1 = &quot;nUMI&quot;, gene2 = &quot;nGene&quot;)</code></pre>
-<p>I guess the second plots are looking at the relationship between nUMI and percent.mito or nGene. There is a linear correlation between nUMI and nGene. Not really sure what to make of the percen.mito graph. Don’t know what the number above the graphs mean.</p>
+<p>par() sets graphical parameters in R.</p>
+<p>Looking at the plots we can identify the outliers and set cutoffs. Here, we set a cutoff of 5% mitochondrial genes. Roger mentioned that typically 10% is used.</p>
 <pre class="r"><code>pbmc &lt;- FilterCells(object = pbmc, subset.names = c(&quot;nGene&quot;, &quot;percent.mito&quot;), low.thresholds = c(200, -Inf), high.thresholds = c(2500, 0.05))</code></pre>
-<p>I’m not sure about the reason why we are filtering some cells out.</p>
 </div>
 <div id="normalizing-the-data" class="section level2">
 <h2><strong>Normalizing the data</strong></h2>
-<p>Its lognormalize with a scale factor of 10,000. I don’t know what this does or why we did it.</p>
+<pre class="r"><code>pbmc &lt;- NormalizeData(object = pbmc, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
+<p>We are correcting for the differing read counts between cells. Example, a cell could have more total expression than another cell but both could have similar gene expression proportion. Count data is bad so we do a log transformation.</p>
+<p>Seurat normalizes the gene expression for each cell by the total expression. Then multiplies this by 10,000 and then logs the result.</p>
 </div>
 <div id="detection-of-variable-genese-across-the-single-cells" class="section level2">
 <h2><strong>Detection of variable genese across the single cells</strong></h2>
+<p>We are only interested in genes that have different expression as similarly expressed genes across cells are uninteresting.</p>
 <pre class="r"><code>pbmc &lt;- FindVariableGenes(object = pbmc, mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)</code></pre>
-<p>Ok, I have done something horribly wrong here because the plot does not come out the same. It does mention that the parameters should depend on the data and how you want to view it.</p>
+<p>One approach would have been to calculate the variance of individual genes across cells and look at the highest variances first. In our graph, “Dispersion” means variance.</p>
+<p>Seurat’s approach: they make bins of mean expression and look at the variance within those bins. This is because variance can depend on the mean (e.g. high mean value may lead to high variance value).</p>
+<p>y.cutoff = 0.5 refers to half a standard deviation away from the mean.</p>
 <pre class="r"><code>length(x = pbmc@var.genes)</code></pre>
-<p>Again my length is not the same.</p>
+<p>This is the amount of variable genes that we have found.</p>
 </div>
 <div id="scaling-the-data-and-removing-unwanted-sources-of-variation" class="section level2">
 <h2><strong>Scaling the data and removing unwanted sources of variation</strong></h2>
-<p>We want to remove technical noise and also biological variation (e.g. cell cycle stage).</p>
+<p>We want to remove technical noise and also biological variation (e.g. cell cycle stage). These are “uninteresting” sources of variation.</p>
+<p>The term “regress out” can be understood <a href="https://stats.stackexchange.com/questions/117840/how-to-regress-out-some-variables">here</a></p>
 <pre class="r"><code>pbmc &lt;- ScaleData(object = pbmc, vars.to.regress = c(&quot;nUMI&quot;, &quot;percent.mito&quot;))</code></pre>
-<p>This may take a bit. There is a nice animation too. It also needs a firewall permission.</p>
+<p>This regression step is still a little confusing. Why are we regressing on nUMI and percent.mito?</p>
 </div>
 <div id="perform-linear-dimensional-reduction" class="section level2">
 <h2><strong>Perform linear dimensional reduction</strong></h2>
@@ -481,7 +528,7 @@ GenePlot(object = pbmc, gene1 = &quot;nUMI&quot;, gene2 = &quot;nGene&quot;)</co
 <pre class="r"><code>PrintPCA(object = pbmc, pcs.print = 1:5, genes.print = 5, use.full = FALSE)
 VizPCA(object = pbmc, pcs.use = 1:2)
 PCAPlot(object = pbmc, dim.1 = 1, dim.2 = 2)</code></pre>
-<p>Yeah, I think I definetly have different data from the example in the tutorial. I don’t know why though.</p>
+<p><del>Yeah, I think I definetly have different data from the example in the tutorial. I don’t know why though.</del></p>
 <pre class="r"><code>pbmc &lt;- ProjectPCA(object = pbmc, do.print = FALSE)</code></pre>
 <p>I don’t really understand what this is for.</p>
 <p>It can also do PCA heatmaps.</p>
@@ -572,29 +619,6 @@ saveRDS(pbmc, file = &quot;../output/pbmc3k_final.rds&quot;)</code></pre>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.5.0 (2018-04-23)
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 17713)
-
-Matrix products: default
-
-locale:
-[1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   
-[3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C                      
-[5] LC_TIME=English_Australia.1252    
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-loaded via a namespace (and not attached):
- [1] workflowr_1.1.1   Rcpp_0.12.18      digest_0.6.15    
- [4] rprojroot_1.3-2   R.methodsS3_1.7.1 backports_1.1.2  
- [7] git2r_0.23.0      magrittr_1.5      evaluate_0.11    
-[10] stringi_1.1.7     whisker_0.3-2     R.oo_1.22.0      
-[13] R.utils_2.6.0     rmarkdown_1.10    tools_3.5.0      
-[16] stringr_1.3.1     yaml_2.1.19       compiler_3.5.0   
-[19] htmltools_0.3.6   knitr_1.20       </code></pre>
-</div>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
