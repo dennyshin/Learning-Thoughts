@@ -5,19 +5,30 @@ date: "2018-08-13"
 output: workflowr::wflow_html
 ---
 
-
+```{r "setup", include=FALSE}
+require("knitr")
+opts_knit$set(root.dir = "C:/Users/Denny/Dropbox/Uni/Research Project/Learning-Thoughts/analysis/")
+knitr::opts_chunk$set(eval = FALSE)
+```
 
 ## **Introduction**
 
 I will be following through the code written [here](https://satijalab.org/seurat/pbmc3k_tutorial.html)
 
+The goal of this tutorial is to demonstrate clustering of RNAseq data. Clustering is the process of grouping similar objects together.
+
 It uses the packages Seurat and dplyr. The Seurat package takes a while.
 
 ## **Setup the Seurat Object**
 
-```{r eval=FALSE}
+Sparse matrices are matrices that contain mostly zeros.
+
+```{r}
+library(Seurat)
+library(dplyr)
+
 # Load the PBMC dataset
-pbmc.data <- Read10X(data.dir = "../data/pbmc3k_filtered_gene_bc_matrices/filtered_gene_bc_matrices/hg19/")
+pbmc.data <- Read10X(data.dir = "../data/filtered_gene_bc_matrices/hg19/")
 
 # Examine the memory savings between regular and sparse matrices
 dense.size <- object.size(x = as.matrix(x = pbmc.data))
@@ -29,22 +40,22 @@ sparse.size
 dense.size/sparse.size
 ```
 
-It may take a little to load the dataset, there are 3. pbmc.data is a large matrix with ~90 million elements. I am assuming the second part is from the dplyr package?
+This first bit is to demonstrate the memory saving capability of Seurat.
 
-My data seems to be a little bigger than the example from the tutorial. This is also seen when I did the sparse.size and its ratio to dense.size.
-
-```{r eval=FALSE}
-# Initialize the Seurat object with the raw (non-normalized data).  Keep all genes expressed in >= 3 cells (~0.1% of the data). Keep all cells with at least 200 detected genes
+```{r}
+# Initialize the Seurat object with the raw (non-normalized data). Keep all genes expressed in >= 3 cells (~0.1% of the data). Keep all cells with at least 200 detected genes
 pbmc <- CreateSeuratObject(raw.data = pbmc.data, min.cells = 3, min.genes = 200, project = "10X_PBMC")
 ```
 
-This made a large seurat (dunno what that is). The 10X_PBMC is confusing, is it just naming it?
-
-# **Standard pre-processing workflow**
+In pbmc@meta.data it contains the nGene and nUMI data for each cell.
 
 ## **QC and selecting cells for further analysis**
 
-```{r eval=FALSE}
+CreateSeuratObject can do a basic cutoff for minimum genes but for more sophisticated filtering (based on technical or biological parameters) we can do the following. Seurat is flexible in allowing user-specific filtering methods. An example:
+
+In this process we try to exclude "multiplets", a phenomenom where multiple cells are in a single droplet. If there is one cell per one droplet, the number of genes observed should reflect the number of UMIs. We also filter cells based on the percentage of mitochondrial genes. High proportions of mitochondrial genome are indicative of poor-quality cells. I should find some published material for this.
+
+```{r}
 mito.genes <- grep(pattern = "^MT-", x = rownames(x = pbmc@data), value = TRUE)
 percent.mito <- Matrix::colSums(pbmc@raw.data[mito.genes, ])/Matrix::colSums(pbmc@raw.data)
 
@@ -52,59 +63,78 @@ pbmc <- AddMetaData(object = pbmc, metadata = percent.mito, col.name = "percent.
 VlnPlot(object = pbmc, features.plot = c("nGene", "nUMI", "percent.mito"), nCol = 3)
 ```
 
-There is a lot of detail as to how the functions work but I can't make head to tail of it either way.
+VlnPlot is built in to Seurat.
 
-grep is just a function that utilises regex and makes making repeating similar names easier. I think percent.mito is finding some kind of proportion of mito?
+Take a closer look into what we just did:
 
-I can make all the plots no problem but I don't really have any idea about the first one.
+```{r}
+dim(pbmc@raw.data)
+pbmc@raw.data[mito.genes, ]
+```
 
-```{r eval=FALSE}
+Ok, so we have 13714 genes (row) and 2700 cells (col). The names of the cells confuse me, are they from the cDNA barcode?
+
+```{r}
 par(mfrow = c(1, 2))
 GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "percent.mito")
 GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "nGene")
 ```
 
-I guess the second plots are looking at the relationship between nUMI and percent.mito or nGene. There is a linear correlation between nUMI and nGene. Not really sure what to make of the percen.mito graph. Don't know what the number above the graphs mean.
+par() sets graphical parameters in R.
 
-```{r eval=FALSE}
+Looking at the plots we can identify the outliers and set cutoffs. Here, we set a cutoff of 5% mitochondrial genes. Roger mentioned that typically 10% is used. 
+
+```{r}
 pbmc <- FilterCells(object = pbmc, subset.names = c("nGene", "percent.mito"), low.thresholds = c(200, -Inf), high.thresholds = c(2500, 0.05))
 ```
 
-I'm not sure about the reason why we are filtering some cells out.
-
 ## **Normalizing the data**
 
-Its lognormalize with a scale factor of 10,000. I don't know what this does or why we did it.
+```{r}
+pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
+We are correcting for the differing read counts between cells. Example, a cell could have more total expression than another cell but both could have similar gene expression proportion. Count data is bad so we do a log transformation.
+
+Seurat normalizes the gene expression for each cell by the total expression. Then multiplies this by 10,000 and then logs the result.
 
 ## **Detection of variable genese across the single cells**
 
-```{r eval=FALSE}
+We are only interested in genes that have different expression as similarly expressed genes across cells are uninteresting.
+
+```{r}
 pbmc <- FindVariableGenes(object = pbmc, mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
 ```
 
-Ok, I have done something horribly wrong here because the plot does not come out the same. It does mention that the parameters should depend on the data and how you want to view it.
+One approach would have been to calculate the variance of individual genes across cells and look at the highest variances first. In our graph, "Dispersion" means variance.
 
-```{r eval=FALSE}
+Seurat's approach: they make bins of mean expression and look at the variance within those bins. This is because variance can depend on the mean (e.g. high mean value may lead to high variance value).
+
+y.cutoff = 0.5 refers to half a standard deviation away from the mean.
+
+```{r}
 length(x = pbmc@var.genes)
 ```
 
-Again my length is not the same.
+This is the amount of variable genes that we have found.
 
 ## **Scaling the data and removing unwanted sources of variation**
 
-We want to remove technical noise and also biological variation (e.g. cell cycle stage). 
+We want to remove technical noise and also biological variation (e.g. cell cycle stage). These are "uninteresting" sources of variation.
 
-```{r eval=FALSE}
+The term "regress out" can be understood [here](https://stats.stackexchange.com/questions/117840/how-to-regress-out-some-variables)
+
+```{r}
 pbmc <- ScaleData(object = pbmc, vars.to.regress = c("nUMI", "percent.mito"))
 ```
 
-This may take a bit. There is a nice animation too. It also needs a firewall permission.
+This regression step is still a little confusing. Why are we regressing on nUMI and percent.mito?
 
 ## **Perform linear dimensional reduction**
 
 We are doing PCA here.
 
-```{r eval=FALSE}
+```{r}
 pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = TRUE, pcs.print = 1:5, genes.print = 5)
 ```
 
@@ -116,7 +146,7 @@ VizPCA(object = pbmc, pcs.use = 1:2)
 PCAPlot(object = pbmc, dim.1 = 1, dim.2 = 2)
 ```
 
-Yeah, I think I definetly have different data from the example in the tutorial. I don't know why though.
+~~Yeah, I think I definetly have different data from the example in the tutorial. I don't know why though.~~
 
 ```{r eval=FALSE}
 pbmc <- ProjectPCA(object = pbmc, do.print = FALSE)
