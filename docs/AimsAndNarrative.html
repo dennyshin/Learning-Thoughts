@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Denny Shin" />
+
+<meta name="date" content="2018-09-17" />
+
+<title>AimsAndNarrative</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Learning. Thoughts</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">AimsAndNarrative</h1>
+<h4 class="author"><em>Denny Shin</em></h4>
+<h4 class="date"><em>2018-09-17</em></h4>
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2018-09-18</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/12239672ee3f814318022b3a2783635178311078" target="_blank">1223967</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+
+Untracked files:
+    Untracked:   (DESKTOP-9MQETIV's conflicted copy 2018-07-26).Rhistory
+    Untracked:  Learning-Thoughts.Rproj
+    Untracked:  data/filtered_gene_bc_matrices/
+    Untracked:  output/pbmc3k_final.rds
+    Untracked:  output/pbmc_tutorial.rds
+
+Unstaged changes:
+    Deleted:    Learning. Thoughts.Rproj
+    Modified:   analysis/Seurat.Rmd
+    Modified:   analysis/long-read-seq-CACNA1C.Rmd
+    Modified:   analysis/single-cell-RNAseq.Rmd
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/12239672ee3f814318022b3a2783635178311078/analysis/AimsAndNarrative.Rmd" target="_blank">1223967</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-09-18
+</td>
+<td style="text-align:left;">
+added aimsandnarrative.Rmd
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
+<hr />
+<div id="project-narrative" class="section level1">
+<h1>Project Narrative</h1>
+<p>immuno-modulatory: capable of modifying or regulating immune functions</p>
+<p>glucocorticoids: a class of corticosteroids (steroid hormone). Its main immune effect is to reduce inflammation. Which is helpful to fight inflammatory conditions such as asthma.</p>
+<p>The project aims to investigate glucocorticoid resistance.</p>
+</div>
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
+<p>Aim 1: single cell analysis of gene expression as a response to glucocorticoids.</p>
+<p>Aim 2: link the single cell analysis to phenotype, patient environment (stress, socioeconomic status, etc) and bulk leukocyte (white blood cell) RNAseq.</p>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Preliminary bulk RNAseq analysis suggests that cell type composition is important in the variation in asthma symptoms.</p>
+<div id="aim-1" class="section level2">
+<h2>Aim 1</h2>
+<p>Peripheral blood mononuclear cell (PBMC) consist of many cell types such as various lymphocytes, monocytes, and dendritic cells. The immune challenges in this experiment are stimulation by lipopolysaccharides (LPS) and phytohemagglutinin (PHA). LPS promotes secretion pro-inflammatory molecules. In total we choose 5 groups: unstimulated, LPS, PHA, LPS+GC, PHA+GC.</p>
+<blockquote>
+<p>PHA function is confusing but I assume it does something similar to LPS?</p>
+</blockquote>
+<p>demultiplexing: process of extracting individual information from what was once mixed together.</p>
+<p>The main steps are to: genotype based demultiplexing, cluster major cell types then identify cell type specific gene expression responses to the 5 different cell treatments.</p>
+</div>
+<div id="aim-2" class="section level2">
+<h2>Aim 2</h2>
+<p>Use the single cell RNAseq results to guide the reconstruction of single cell profiles of patients with only bulk RNAseq data. Simply put, we want to build a decomposition method from the single cell profiles created in Aim 1. Then we would like to reconstruct scRNAseq profiles from only bulk RNAseq data.</p>
+</div>
+</div>
+<div id="significance-and-relevance-to-human-health" class="section level1">
+<h1>Significance and relevance to human health</h1>
+<p>Some population of asthmatics do no respond to glucocorticoid therapy.</p>
+</div>
+<div id="scientific-premise" class="section level1">
+<h1>Scientific Premise</h1>
+<p>People with allergic asthma have an imbalance of T helper (Th1) and Th2 cell immune reactions, specifically an over reaction of Th2. Th2 plays a main role in an inflammatory immune response while Th1 suppress Th2.</p>
+<p>Previous studies are limited because they require invasive biopsies resulting in limited samples sizes and reproducibility.</p>
+<p>Glucocorticoids and its receptor (GR) act as a transcription factor.</p>
+<p>Stress exacerbates inflammation despite the fact stress causes high levels of cortisol (which are anti-inflammatory). Evidence shows that cortisol production down regulates glucocorticoid receptor expression.</p>
+</div>
+<div id="preliminary-results" class="section level1">
+<h1>Preliminary Results</h1>
+<p>Psychosocial environment is associated with glucocorticoid resistance.</p>
+<p>Cell composition is strongly linked with differential expression.</p>
+</div>
+<div id="approach" class="section level1">
+<h1>Approach</h1>
+<div id="power-analyses" class="section level2">
+<h2>Power analyses</h2>
+<blockquote>
+<p>Poisson Limit Theorem: sequence np converges to <span class="math inline">\(\lambda\)</span> ?</p>
+</blockquote>
+<p>Overall this section is confusing.</p>
+</div>
+<div id="aim-1-1" class="section level2">
+<h2>Aim 1</h2>
+<div id="sample-pre-processing-single-cell-determination-and-individual-of-origin-identification" class="section level4">
+<h4>Sample pre-processing, single cell determination and individual of origin identification</h4>
+<p>read alignments done by “cellranger”</p>
+<p>find cell origin using “demuxlet”</p>
+</div>
+<div id="cell-type-identification" class="section level4">
+<h4>Cell type identification</h4>
+<ol style="list-style-type: decimal">
+<li>variable gene identification</li>
+<li>PCA dimensionality reduction</li>
+<li>clustering (k-means or graph theoretic approach)</li>
+<li>t-SNE, force graph or UMAP</li>
+</ol>
+<p>“Seurat” shows that there are 4 major cell populations: T-cells, NK-cells, B-cells, monocytes. The first three are known as lymphocytes.</p>
+<blockquote>
+<p>For subsequent analyses, we will use a categorical variable for each cell defining which major celltype is assigned. Additionally, we will use a continuous variable to represent additional states within a cell-type (e.g. proliferating, being activated) or a pseudo-time trajectory between states.</p>
+</blockquote>
+</div>
+<div id="to-characterize-cell-type-specific-responses-to-immune-activation" class="section level4">
+<h4>To characterize cell type specific responses to immune activation</h4>
+<p>Aggregate the reads per individual to a simpler matrix that has 4 specific cell types for each 48 individuals.</p>
+<p>Identify genes with cell type specific transcriptional response. DESeq2 will be used.</p>
+<p>Benjamini-Hochberg decreases False Discovery Rates (FDR or in this case BH-FDR)</p>
+<blockquote>
+<p>Additionally, we will consider a linear mixed-effects model, to accommodate different sources of heterogeneity within the cell types.</p>
+</blockquote>
+</div>
+<div id="expected-outcome" class="section level4">
+<h4>Expected Outcome</h4>
+<p>Characterization of gene expression profiles for different cell types. Their transcriptional response to LPS and PHA. Observe glucocorticoid’s immono-modulatory response. Observer gene expression in cytokine-mediated cell-cell communication.</p>
+</div>
+</div>
+<div id="aim-2-1" class="section level2">
+<h2>Aim 2</h2>
+<p>Data from Aim 1 will guide the decomposition of bulk RNAseq data.</p>
+<div id="developing-computational-tools-for-the-analysis-of-complex-large-scale-heterogeneous-datasets-using-single-cell-reference-panels" class="section level4">
+<h4>Developing computational tools for the analysis of complex large scale heterogeneous datasets using single cell reference panels</h4>
+<p>Many different approaches are proposed:</p>
+<ul>
+<li>Factor analysis to decompose bulk data and define specific cell type components. Linear combination of weights. Weights should represent the proportion of cell types given a state.</li>
+<li>BSEQ-sc. Single cell reference panel to deconvolve cell type differential expression of bulk data</li>
+<li>Semi-supervised network to predict cell type. Predict future vector state of each cell type in response to immune stimulation. “Theano” and “Keras” packages.</li>
+</ul>
+</div>
+<div id="association-between-cell-type-expression-responses-asthma-phenotypes-and-environmental-factors" class="section level4">
+<h4>Association between cell-type expression responses, asthma phenotypes and environmental factors</h4>
+<ol style="list-style-type: decimal">
+<li>identify most relevant cell types</li>
+<li>characterize cell type specific signature of glucocorticoid resistance</li>
+<li>find if glucocorticoid resistance is mainly due to cell type or a broader range of immune cells</li>
+<li>which cell specific response is most strongly linked with asthma severity</li>
+</ol>
+</div>
+<div id="expected-outcome-1" class="section level4">
+<h4>Expected outcome</h4>
+<p>Link together clinical, behavioural, bulk and single cell data. Method will be applicable to other single cell or bulk datasets.</p>
+</div>
+</div>
+<div id="caveats-and-potential-pitfalls" class="section level2">
+<h2>Caveats and potential pitfalls</h2>
+<p>Potential for insufficient statistical power. Have access to additional datasets.</p>
+</div>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
+</p>
+<hr>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
