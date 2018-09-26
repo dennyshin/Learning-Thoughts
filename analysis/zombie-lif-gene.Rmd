@@ -1,0 +1,72 @@
+---
+title: "zombie-lif-gene"
+author: "Denny Shin"
+date: "2018-09-25"
+output: workflowr::wflow_html
+---
+
+# **Very short summary**
+
+Large origanisms should have more risk to cancer. But evidence shows otherwise (Peto's paradox).
+
+LIF gene in elephants is upregulated in response to DNA damage which reduces the risk of cancer. The LIF6 induces apoptosis in damaged cells. 
+
+# **Introduction**
+
+Larger body and longer life span should equal higher risk of cancer. This is consistent within species but not across different species (Peto's paradox).
+
+oncogene = gene that has potential to cause cancer
+
+Interleukin-6 class cytokine leukemia inhibitory factor (LIF) can be a tumor suppressor or and oncogene depending on context.
+
+LIF6, which is similar to LIF-T, induces apoptosis when overexpresse.
+
+# **Results**
+
+#### **Repeated SEgmental Duplications Increased LIF Copy NUmber in Paenungulates**
+
+Paenungulata (Manatee, rock hyrax, african elephant) have hight copy number variation than the other species studied.
+
+* Why is copy number variation of the LIF gene significant here?
+
+> None of the duplicate LIF genes includes the 50-UTR, coding exon 1, or a paired low complexity (CGAG)n/CT-rich repeat common to the canonical LIF genes in elephant, hyrax, manatee, tenrec, and armadillo 
+
+Figure 2 indicates that:
+
+> the additional LIF genes result from repeated rounds of segmental duplication
+
+* How to look at Figure 2?
+
+#### **Duplicate LIF genes are structurally similar to the LIF-T**
+
+The duplicates of the LIF gene keep the pro-apoptotic feature of LIF-T. This feature is from the leucine and/or isoleucine repeat in the polypeptide sequence.
+
+#### **Elephant LIF6 is upregulated by TP53 in Response to DNA damage**
+
+The main thing that is interesting is whether the expansion of LIF genes plays a role in the enhance cancer resistance. If it is, then one or more LIF genes should be transcribed.
+
+IN the asian elephant dataset, the LIF6 transcript expression was extremely low (this is actually expected? because it is a pro-apoptotic gene). 
+
+The investigation then turns to TP53, which is known regulate LIF in response to DNA damage. Elephant LIF6 was found to have TP53 binding sites.
+
+They then treated african elephant cells with a DNA-damaging agent (doxurubicin = DOX or MDM2).
+
+DOX = common chemotherapy medication
+
+MDM2 = mediated TP53 (TP53 = tumor suppressor 53)
+
+LIF1 gene did not respond to either treatment. LIF6 genes increased in expression by ~8 and ~16.
+
+To test the TP53 binding site upstream of elephant LIF6: the region was cloned onto a luciferase (related to bioluminesence) vector. Since, it is unrelated, the presence of the binding site should have no effect and the evidence shows as such.
+
+I think the next part is saying that they took rabbit TP53 and tested whether it binded with elephant TP53 binding sites. With DOX, MDM2 treatment, there was an increase in binding.
+
+siRNA = small interfering RNA which are double stranded RNA that preven mRNA translation
+
+siRNA significantly reduced TP53 transcript levels. Knockdown of TP53 did not inhibit the induction of apoptosis. Suggests that LIF6 can induce apoptosis in the absence of DNA damage similar to LIF-T. 
+
+> Thus, we conclude that elephant LIF6 is transcriptionally upregulated by TP53 in response to DNA damage and may have pro-apoptotic functions.
+
+How? It is not very clear to me.
+
+#### **Elephant LIF6 contributed to the augmented DNA-damage response in elephants**

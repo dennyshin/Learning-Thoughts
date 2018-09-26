@@ -1,0 +1,101 @@
+---
+title: "4kpbmc"
+author: "Denny Shin"
+date: "2018-09-26"
+output: workflowr::wflow_html
+---
+
+```{r "setup", include=FALSE}
+require("knitr")
+opts_knit$set(root.dir = "C:/Users/Denny/Dropbox/Uni/Research Project/Learning-Thoughts/analysis/")
+```
+
+# **Introduction**
+
+4k PBMC single cell analysis
+
+I will follow along with Seurat
+
+# **Setup the Seurat Object**
+
+```{r}
+library(Seurat)
+library(dplyr)
+
+pbmc.data = Read10X(data.dir = "../data/4k PBMCs from a Healthy Donor/pbmc4k_filtered_gene_bc_matrices/filtered_gene_bc_matrices/GRCh38/")
+
+dense.size = object.size(x =  as.matrix(x = pbmc.data))
+dense.size
+
+sparse.size = object.size(x = pbmc.data)
+sparse.size
+
+dense.size/sparse.size
+
+pbmc <- CreateSeuratObject(raw.data = pbmc.data, min.cells = 3, min.genes = 200, project = "10X_4kPBMC")
+```
+
+# **QC**
+
+#### **filter poor quality cells**
+
+```{r}
+mito.genes <- grep(pattern = "^MT-", x = rownames(x = pbmc@data), value = TRUE)
+percent.mito <- Matrix::colSums(pbmc@raw.data[mito.genes, ])/Matrix::colSums(pbmc@raw.data)
+
+pbmc <- AddMetaData(object = pbmc, metadata = percent.mito, col.name = "percent.mito")
+VlnPlot(object = pbmc, features.plot = c("nGene", "nUMI", "percent.mito"), nCol = 3)
+
+par(mfrow = c(1, 2))
+GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "percent.mito")
+GenePlot(object = pbmc, gene1 = "nUMI", gene2 = "nGene")
+```
+
+from the graphs, I decided to filter out cells with 10 or more percentage of mitochondrial genes
+
+also cells with unique gene counts over 4000
+
+```{r}
+pbmc <- FilterCells(object = pbmc, subset.names = c("nGene", "percent.mito"), low.thresholds = c(200, -Inf), high.thresholds = c(4000, 0.10))
+```
+
+#### **Normalising the data**
+
+```{r}
+pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
+# **Detection of variable genes across the single cells**
+
+The parameters chosen here should most likely be similar to the Seurat tutorial but there may be some things I am missing. What are some good reasons to help decide on good cutoff values?
+
+```{r}
+pbmc <- FindVariableGenes(object = pbmc, mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
+
+length(x = pbmc@var.genes)
+```
+
+# **Scaling data and removing unwanted sources of variation**
+
+```{r}
+pbmc <- ScaleData(object = pbmc, vars.to.regress = c("nUMI", "percent.mito"))
+```
+
+# **Perform linear dimensional reduction**
+
+```{r}
+pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = TRUE, pcs.print = 1:5, genes.print = 5)
+```
+
+```{r}
+VizPCA(object = pbmc, pcs.use = 1:2)
+
+VizPCA(object = pbmc, pcs.use = 1:2, num.genes = 10)
+```
+
+
+```{r}
+PCAPlot(object = pbmc)
+```
+
+We can notice 2 or maybe 3 different cell types??
