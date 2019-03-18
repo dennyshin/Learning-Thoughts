@@ -27,9 +27,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -104,6 +103,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -118,7 +120,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -138,6 +139,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -159,18 +197,77 @@ $(document).ready(function () {
 });
 </script>
 
-
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -323,7 +420,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-08-07</p>
+<p><strong>Last updated:</strong> 2019-03-18</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -347,18 +444,26 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/cf24a1a504e3406f56bc0acce41d704e79940754" target="_blank">cf24a1a</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/dennyshin/Learning-Thoughts/tree/75fd797323f2e5e406156b7adbcecb8110eb4f30" target="_blank">75fd797</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
 
 Untracked files:
-    Untracked:   (DESKTOP-9MQETIV's conflicted copy 2018-07-26).Rhistory
     Untracked:  Learning-Thoughts.Rproj
+    Untracked:  analysis/PCA.Rmd
+    Untracked:  data/4k PBMCs from a Healthy Donor/
+    Untracked:  data/filtered_gene_bc_matrices/
 
 Unstaged changes:
     Deleted:    Learning. Thoughts.Rproj
+    Modified:   analysis/4kpbmc.Rmd
+    Modified:   analysis/articles-read-2018.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/long-read-seq-CACNA1C.Rmd
+    Modified:   analysis/single-cell-RNAseq.Rmd
+    Modified:   analysis/zombie-lif-gene.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -387,6 +492,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/dennyshin/Learning-Thoughts/blob/75fd797323f2e5e406156b7adbcecb8110eb4f30/analysis/workflowr.Rmd" target="_blank">75fd797</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2019-03-18
+</td>
+<td style="text-align:left;">
+added information about making the github webpage
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/dennyshin/Learning-Thoughts/a79ed496721368a57141fb0eef1b6a01cfe2fdd3/docs/workflowr.html" target="_blank">a79ed49</a>
+</td>
+<td style="text-align:left;">
+Denny Shin
+</td>
+<td style="text-align:left;">
+2018-08-07
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 html
@@ -619,11 +758,18 @@ initial setup of website. also changed index and added workflowr page
 <li><p>Set the origin to the repository</p></li>
 </ol>
 <pre class="r"><code>wflow_git_remote(&quot;origin&quot;, &quot;username&quot;, &quot;project_name&quot;)</code></pre>
-<p><strong>Note: “origin” can be anything you want. “username” must be your exact github username. “project_name” should be the name of your newly created repository.</strong></p>
+<p><strong>Note: “origin” can be anything you want. “username” must be your exact github username. “project_name” should be the name of your newly created repository. You only need to do this once per project</strong></p>
 <ol start="8" style="list-style-type: decimal">
 <li>Push to git</li>
 </ol>
 <pre class="r"><code>wflow_git_push()</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>website</li>
+</ol>
+<p>Go to the settings page of your repository on github.</p>
+<p>Scroll down to “Github Pages”</p>
+<p>Change the source to “master branch /docs folder”</p>
+<p>This will give you a link to the website that you can paste into your repository description.</p>
 </div>
 <div id="making-edits" class="section level2">
 <h2><strong>Making edits</strong></h2>
@@ -660,28 +806,30 @@ initial setup of website. also changed index and added workflowr page
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.5.0 (2018-04-23)
+<pre><code>R version 3.5.2 (2018-12-20)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 17713)
+Running under: Windows 10 x64 (build 18356)
 
 Matrix products: default
 
 locale:
-[1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   
-[3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C                      
-[5] LC_TIME=English_Australia.1252    
+[1] LC_COLLATE=English_United Kingdom.1252 
+[2] LC_CTYPE=English_United Kingdom.1252   
+[3] LC_MONETARY=English_United Kingdom.1252
+[4] LC_NUMERIC=C                           
+[5] LC_TIME=English_United Kingdom.1252    
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] workflowr_1.1.1   Rcpp_0.12.18      digest_0.6.15    
- [4] rprojroot_1.3-2   R.methodsS3_1.7.1 backports_1.1.2  
- [7] git2r_0.23.0      magrittr_1.5      evaluate_0.11    
-[10] stringi_1.1.7     whisker_0.3-2     R.oo_1.22.0      
-[13] R.utils_2.6.0     rmarkdown_1.10    tools_3.5.0      
-[16] stringr_1.3.1     yaml_2.1.19       compiler_3.5.0   
-[19] htmltools_0.3.6   knitr_1.20       </code></pre>
+ [1] workflowr_1.1.1   Rcpp_1.0.0        rprojroot_1.3-2  
+ [4] digest_0.6.18     R.methodsS3_1.7.1 backports_1.1.3  
+ [7] git2r_0.24.0      magrittr_1.5      evaluate_0.12    
+[10] stringi_1.2.4     whisker_0.3-2     R.oo_1.22.0      
+[13] R.utils_2.7.0     rmarkdown_1.11    tools_3.5.2      
+[16] stringr_1.3.1     xfun_0.4          yaml_2.2.0       
+[19] compiler_3.5.2    htmltools_0.3.6   knitr_1.21       </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
