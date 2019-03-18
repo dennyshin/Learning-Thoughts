@@ -64,7 +64,7 @@ wflow_publish("files", "comment")
 wflow_git_remote("origin", "username", "project_name")
 ```
 
-**Note: "origin" can be anything you want. "username" must be your exact github username. "project_name" should be the name of your newly created repository.**
+**Note: "origin" can be anything you want. "username" must be your exact github username. "project_name" should be the name of your newly created repository. You only need to do this once per project**
 
 8. Push to git
 
@@ -72,6 +72,15 @@ wflow_git_remote("origin", "username", "project_name")
 wflow_git_push()
 ```
 
+9. website
+
+Go to the settings page of your repository on github.
+
+Scroll down to "Github Pages"
+
+Change the source to "master branch /docs folder"
+
+This will give you a link to the website that you can paste into your repository description.
 
 ## **Making edits**
 
